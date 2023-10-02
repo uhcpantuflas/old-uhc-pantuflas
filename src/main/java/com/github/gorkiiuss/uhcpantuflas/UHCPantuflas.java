@@ -25,6 +25,13 @@ public final class UHCPantuflas extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
+        // Load current configuration
+        ConfigurationManager.get().init(this);
+
+        // Register all listeners
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+
+        System.out.println("Plugin UHC Pantuflas-0.0.0-INITIAL successfully charged");
     }
 
     @Override
