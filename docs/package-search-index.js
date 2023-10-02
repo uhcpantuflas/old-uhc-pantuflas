@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.github.gorkiiuss.uhcpantuflas"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.github.gorkiiuss.uhcpantuflas"},{"l":"com.github.gorkiiuss.uhcpantuflas.text"},{"l":"com.github.gorkiiuss.uhcpantuflas.title"}];updateSearchResults();

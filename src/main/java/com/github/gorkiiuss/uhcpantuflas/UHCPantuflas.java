@@ -16,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * within the Minecraft server environment. It extends the JavaPlugin class,
  * allowing it to integrate seamlessly with the Bukkit/Spigot API.
  *
- * @version 0.0.0-INITIAL
+ * @version 0.0.1-ALPHA.0
  * @since 01/10/2023-INITIAL
  */
 public final class UHCPantuflas extends JavaPlugin {
@@ -25,6 +25,13 @@ public final class UHCPantuflas extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
+        // Load current configuration
+        ConfigurationManager.get().init(this);
+
+        // Register all listeners
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+
+        System.out.println("Plugin UHC Pantuflas-0.0.0-INITIAL successfully charged");
     }
 
     @Override
