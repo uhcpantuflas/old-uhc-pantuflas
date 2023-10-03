@@ -2,3 +2,9 @@ name: uhc-pantuflas
 version: '${project.version}'
 main: com.github.gorkiiuss.uhcpantuflas.UHCPantuflas
 api-version: '1.20'
+
+commands:
+  uhc-config:
+    description: Configure UHC Pantuflas settings
+    usage: /uhc-config <section> <option> <value>
+    aliases: uhc-config
