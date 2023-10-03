@@ -1,6 +1,11 @@
 package com.github.gorkiiuss.uhcpantuflas;
 
+import com.github.gorkiiuss.uhcpantuflas.config.ConfigurationManager;
+import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigCommandExecutor;
+import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigTabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Objects;
 
 /**
  * UHCPantuflas is a Minecraft plugin that allows players to create and customize
@@ -19,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @version 0.0.1-ALPHA.0
  * @since 01/10/2023-INITIAL
  */
+@SuppressWarnings("unused")
 public final class UHCPantuflas extends JavaPlugin {
 
     @Override
@@ -26,10 +32,15 @@ public final class UHCPantuflas extends JavaPlugin {
         // Plugin startup logic
 
         // Load current configuration
-        ConfigurationManager.get().init(this);
+        saveDefaultConfig();
+        ConfigurationManager.get().init(getConfig());
 
         // Register all listeners
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+
+        // Register all commands
+        Objects.requireNonNull(getCommand(UHCConfigCommandExecutor.NAME)).setExecutor(new UHCConfigCommandExecutor());
+        Objects.requireNonNull(getCommand(UHCConfigCommandExecutor.NAME)).setTabCompleter(new UHCConfigTabCompleter());
 
         System.out.println("Plugin UHC Pantuflas-0.0.0-INITIAL successfully charged");
     }
@@ -37,6 +48,6 @@ public final class UHCPantuflas extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-
+        saveConfig();
     }
 }
