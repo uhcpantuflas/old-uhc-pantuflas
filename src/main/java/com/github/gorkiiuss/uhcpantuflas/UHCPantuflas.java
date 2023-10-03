@@ -21,7 +21,7 @@ import java.util.Objects;
  * within the Minecraft server environment. It extends the JavaPlugin class,
  * allowing it to integrate seamlessly with the Bukkit/Spigot API.
  *
- * @version 0.0.1-ALPHA.0
+ * @version 0.0.1-ALPHA.0 TODO 03/10/2023 change version name to ALPHA.1
  * @since 01/10/2023-INITIAL
  */
 @SuppressWarnings("unused")
