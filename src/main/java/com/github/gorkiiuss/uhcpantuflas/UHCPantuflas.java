@@ -37,6 +37,7 @@ public final class UHCPantuflas extends JavaPlugin {
 
         // Register all listeners
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerLoginListener(), this);
 
         // Register all commands
         Objects.requireNonNull(getCommand(UHCConfigCommandExecutor.NAME)).setExecutor(new UHCConfigCommandExecutor());
