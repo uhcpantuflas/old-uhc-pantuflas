@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class TeamManager {
     private static TeamManager instance;
     private final ArrayList<Team> teams = new ArrayList<>();
+    private int teamsSize;
 
     private TeamManager() {
         // Private constructor to enforce singleton pattern
@@ -37,5 +38,15 @@ public class TeamManager {
      */
     public boolean isPlayerInATeam(String playerName) {
         return teams.stream().anyMatch(team -> team.hasEntry(playerName));
+    }
+
+    public void setTeamsSize(int teamsSize) {
+        this.teamsSize = teamsSize;
+
+        teams.stream().filter(team -> team.getSize() > teamsSize).forEach(team -> {
+            // TODO: 04/10/2023 Do something with the leftover teammates
+        });
+
+        System.out.println("Team size set to " + teamsSize);
     }
 }

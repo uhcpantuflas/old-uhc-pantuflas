@@ -3,6 +3,7 @@ package com.github.gorkiiuss.uhcpantuflas.config;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.UHCGameMode;
 import com.github.gorkiiuss.uhcpantuflas.config.exceptions.*;
+import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
 import com.github.gorkiiuss.uhcpantuflas.title.Title;
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
 import org.bukkit.configuration.ConfigurationSection;
@@ -28,10 +29,12 @@ public class ConfigurationManager {
     public static final String FADE_OUT_KEY = "fade-out";
     public static final String GAMEPLAY_KEY = "gameplay";
     public static final String GAME_MODE_KEY = "mode";
+    public static final String TEAMS_KEY = "teams";
+    public static final String SIZE_KEY = "size";
 
     private static final String LOAD_ERROR_MSG = "Fatal error occurred while loading settings";
     private static final String GAME_MODE_ERROR_MSG = "only " + UHCGameMode.values().length + " game-modes exist and you tried to set it to $1";
-
+    private static final String TEAMS_SIZE_ERROR_MSG = "The team size must be at least 1";
     private FileConfiguration config;
 
     private ConfigurationManager() {
@@ -72,6 +75,7 @@ public class ConfigurationManager {
         switch (sectionName) {
             case JOINING_TITLE_KEY -> loadJoiningTitle(Objects.requireNonNull(config.getConfigurationSection(JOINING_TITLE_KEY)));
             case GAMEPLAY_KEY -> loadGameplaySettings(Objects.requireNonNull(config.getConfigurationSection(GAMEPLAY_KEY)));
+            case TEAMS_KEY -> loadTeamsSettings(Objects.requireNonNull(config.getConfigurationSection(TEAMS_KEY)));
         }
     }
 
@@ -104,6 +108,18 @@ public class ConfigurationManager {
                     GAME_MODE_ERROR_MSG.replace("$1", gameModeIdx + "")
             );
         }
+    }
+
+    private void loadTeamsSettings(ConfigurationSection teamsSection) throws UHCConfigWrongValueException {
+        int teamsSize = teamsSection.getInt(SIZE_KEY);
+        if (teamsSize < 1) throw new UHCConfigWrongValueException(
+                teamsSize + "",
+                TEAMS_KEY,
+                SIZE_KEY,
+                TEAMS_SIZE_ERROR_MSG
+        );
+
+        TeamManager.get().setTeamsSize(teamsSize);
     }
 
     /**

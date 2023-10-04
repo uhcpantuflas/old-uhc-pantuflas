@@ -6,3 +6,5 @@ joining-title:
   fade-out: 20
 gameplay:
   mode: 0 # Min Zero Teams
+teams:
+  size: 2
