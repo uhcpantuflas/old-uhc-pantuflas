@@ -74,4 +74,15 @@ public class Title {
     public int getFadeOut() {
         return fadeOut;
     }
+
+    @Override
+    public String toString() {
+        return "Title{" +
+                "title='" + title + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", fadeIn=" + fadeIn +
+                ", stay=" + stay +
+                ", fadeOut=" + fadeOut +
+                '}';
+    }
 }

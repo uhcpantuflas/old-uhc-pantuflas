@@ -12,6 +12,10 @@ public enum UHCGameMode {
      * The "Min Zero Teams" game mode starts with teams from the beginning of the match.
      * Players are organized into teams, and team gameplay is a key aspect of this mode.
      */
-    MIN_ZERO_TEAMS
+    MIN_ZERO_TEAMS;
+
+    public static UHCGameMode get(int gameModeIdx) {
+        return values()[gameModeIdx];
+    }
 }
 
