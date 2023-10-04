@@ -1,7 +1,7 @@
 package com.github.gorkiiuss.uhcpantuflas.config;
 
-import com.github.gorkiiuss.uhcpantuflas.GameplayManager;
-import com.github.gorkiiuss.uhcpantuflas.UHCGameMode;
+import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
+import com.github.gorkiiuss.uhcpantuflas.gameplay.UHCGameMode;
 import com.github.gorkiiuss.uhcpantuflas.config.exceptions.*;
 import com.github.gorkiiuss.uhcpantuflas.title.Title;
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;

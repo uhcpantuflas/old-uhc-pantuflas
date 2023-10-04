@@ -1,4 +1,4 @@
-package com.github.gorkiiuss.uhcpantuflas;
+package com.github.gorkiiuss.uhcpantuflas.gameplay;
 
 /**
  * The UHCGameMode enum represents different game modes available for Ultra Hardcore (UHC) matches.

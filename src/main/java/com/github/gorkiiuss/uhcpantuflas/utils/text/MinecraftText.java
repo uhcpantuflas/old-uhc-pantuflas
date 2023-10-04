@@ -1,4 +1,4 @@
-package com.github.gorkiiuss.uhcpantuflas.text;
+package com.github.gorkiiuss.uhcpantuflas.utils.text;
 
 /**
  * The MinecraftText class represents text with optional formatting attributes used in Minecraft.

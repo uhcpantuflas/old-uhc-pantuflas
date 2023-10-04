@@ -1,4 +1,4 @@
-package com.github.gorkiiuss.uhcpantuflas;
+package com.github.gorkiiuss.uhcpantuflas.teams;
 
 import org.bukkit.scoreboard.Team;
 

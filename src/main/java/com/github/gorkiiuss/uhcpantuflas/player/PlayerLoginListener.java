@@ -1,5 +1,8 @@
-package com.github.gorkiiuss.uhcpantuflas;
+package com.github.gorkiiuss.uhcpantuflas.player;
 
+import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
+import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
+import com.github.gorkiiuss.uhcpantuflas.gameplay.UHCGameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;

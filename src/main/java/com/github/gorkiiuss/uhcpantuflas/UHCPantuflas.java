@@ -3,6 +3,8 @@ package com.github.gorkiiuss.uhcpantuflas;
 import com.github.gorkiiuss.uhcpantuflas.config.ConfigurationManager;
 import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigTabCompleter;
+import com.github.gorkiiuss.uhcpantuflas.player.PlayerJoinListener;
+import com.github.gorkiiuss.uhcpantuflas.player.PlayerLoginListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;

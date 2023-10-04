@@ -1,4 +1,4 @@
-package com.github.gorkiiuss.uhcpantuflas;
+package com.github.gorkiiuss.uhcpantuflas.gameplay;
 
 public class GameplayManager {
     private static GameplayManager instance;

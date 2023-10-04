@@ -1,4 +1,4 @@
-package com.github.gorkiiuss.uhcpantuflas.text;
+package com.github.gorkiiuss.uhcpantuflas.utils.text;
 
 import java.util.ArrayList;
 
