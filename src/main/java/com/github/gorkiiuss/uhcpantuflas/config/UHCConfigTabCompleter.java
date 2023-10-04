@@ -42,14 +42,21 @@ public class UHCConfigTabCompleter implements TabCompleter {
             case 1 -> {
                 String partialSection = args[0];
                 addCompletion(completions, ConfigurationManager.JOINING_TITLE_KEY, partialSection);
+                addCompletion(completions, ConfigurationManager.GAMEPLAY_KEY, partialSection);
             }
             case 2 -> {
                 String partialOption = args[1];
-                addCompletion(completions, ConfigurationManager.TITLE_KEY, partialOption);
-                addCompletion(completions, ConfigurationManager.SUBTITLE_KEY, partialOption);
-                addCompletion(completions, ConfigurationManager.FADE_IN_KEY, partialOption);
-                addCompletion(completions, ConfigurationManager.STAY_KEY, partialOption);
-                addCompletion(completions, ConfigurationManager.FADE_OUT_KEY, partialOption);
+
+                switch (args[0]) {
+                    case ConfigurationManager.JOINING_TITLE_KEY -> {
+                        addCompletion(completions, ConfigurationManager.TITLE_KEY, partialOption);
+                        addCompletion(completions, ConfigurationManager.SUBTITLE_KEY, partialOption);
+                        addCompletion(completions, ConfigurationManager.FADE_IN_KEY, partialOption);
+                        addCompletion(completions, ConfigurationManager.STAY_KEY, partialOption);
+                        addCompletion(completions, ConfigurationManager.FADE_OUT_KEY, partialOption);
+                    }
+                    case ConfigurationManager.GAMEPLAY_KEY -> addCompletion(completions, ConfigurationManager.GAME_MODE_KEY, partialOption);
+                }
             }
         }
 

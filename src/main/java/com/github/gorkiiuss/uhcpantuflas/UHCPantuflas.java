@@ -3,6 +3,8 @@ package com.github.gorkiiuss.uhcpantuflas;
 import com.github.gorkiiuss.uhcpantuflas.config.ConfigurationManager;
 import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigTabCompleter;
+import com.github.gorkiiuss.uhcpantuflas.player.PlayerJoinListener;
+import com.github.gorkiiuss.uhcpantuflas.player.PlayerLoginListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -21,7 +23,7 @@ import java.util.Objects;
  * within the Minecraft server environment. It extends the JavaPlugin class,
  * allowing it to integrate seamlessly with the Bukkit/Spigot API.
  *
- * @version 0.0.1-ALPHA.0
+ * @version 0.0.1-ALPHA.0 TODO 03/10/2023 change version name to ALPHA.1
  * @since 01/10/2023-INITIAL
  */
 @SuppressWarnings("unused")
@@ -37,6 +39,7 @@ public final class UHCPantuflas extends JavaPlugin {
 
         // Register all listeners
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerLoginListener(), this);
 
         // Register all commands
         Objects.requireNonNull(getCommand(UHCConfigCommandExecutor.NAME)).setExecutor(new UHCConfigCommandExecutor());

@@ -1,4 +1,4 @@
-package com.github.gorkiiuss.uhcpantuflas;
+package com.github.gorkiiuss.uhcpantuflas.player;
 
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
 import org.bukkit.entity.Player;

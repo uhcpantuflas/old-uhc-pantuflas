@@ -1,4 +1,4 @@
-package com.github.gorkiiuss.uhcpantuflas.text;
+package com.github.gorkiiuss.uhcpantuflas.utils.text;
 
 /**
  * The MinecraftColor enum represents different colors used in Minecraft's text formatting.

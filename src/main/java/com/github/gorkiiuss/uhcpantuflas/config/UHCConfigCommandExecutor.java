@@ -45,7 +45,6 @@ public class UHCConfigCommandExecutor implements CommandExecutor {
             ConfigurationManager.get().set(section, option, value.toString());
         } catch (UHCConfigException e) {
             sender.sendMessage(e.getMessage());
-            return false;
         }
 
         return true;

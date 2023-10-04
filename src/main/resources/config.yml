@@ -4,3 +4,5 @@ joining-title:
   fade-in: 20
   stay: 100
   fade-out: 20
+gameplay:
+  mode: 0 # Min Zero Teams

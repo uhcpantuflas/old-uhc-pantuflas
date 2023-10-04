@@ -1,7 +1,7 @@
 package com.github.gorkiiuss.uhcpantuflas.title;
 
-import com.github.gorkiiuss.uhcpantuflas.text.MinecraftColor;
-import com.github.gorkiiuss.uhcpantuflas.text.MinecraftTextBuilder;
+import com.github.gorkiiuss.uhcpantuflas.utils.text.MinecraftColor;
+import com.github.gorkiiuss.uhcpantuflas.utils.text.MinecraftTextBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
@@ -79,6 +79,7 @@ public class TitleManager {
      */
     public void setJoiningTitle(Title joiningTitle) {
         this.joiningTitle = formatAsJoining(joiningTitle);
+        System.out.println("Joining title set to " + this.joiningTitle);
     }
 
     private Title formatAsJoining(Title title) {

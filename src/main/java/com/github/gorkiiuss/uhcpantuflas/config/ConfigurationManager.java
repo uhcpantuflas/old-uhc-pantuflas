@@ -1,9 +1,8 @@
 package com.github.gorkiiuss.uhcpantuflas.config;
 
-import com.github.gorkiiuss.uhcpantuflas.config.exceptions.UHCConfigException;
-import com.github.gorkiiuss.uhcpantuflas.config.exceptions.UHCConfigUnknownOptionException;
-import com.github.gorkiiuss.uhcpantuflas.config.exceptions.UHCConfigUnknownSectionException;
-import com.github.gorkiiuss.uhcpantuflas.config.exceptions.UHCConfigWrongValueTypeException;
+import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
+import com.github.gorkiiuss.uhcpantuflas.gameplay.UHCGameMode;
+import com.github.gorkiiuss.uhcpantuflas.config.exceptions.*;
 import com.github.gorkiiuss.uhcpantuflas.title.Title;
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
 import org.bukkit.configuration.ConfigurationSection;
@@ -27,6 +26,11 @@ public class ConfigurationManager {
     public static final String FADE_IN_KEY = "fade-in";
     public static final String STAY_KEY = "stay";
     public static final String FADE_OUT_KEY = "fade-out";
+    public static final String GAMEPLAY_KEY = "gameplay";
+    public static final String GAME_MODE_KEY = "mode";
+
+    private static final String LOAD_ERROR_MSG = "Fatal error occurred while loading settings";
+    private static final String GAME_MODE_ERROR_MSG = "only " + UHCGameMode.values().length + " game-modes exist and you tried to set it to $1";
 
     private FileConfiguration config;
 
@@ -51,12 +55,24 @@ public class ConfigurationManager {
      */
     public void init(FileConfiguration config) {
         this.config = config;
-        loadConfig();
+        try {
+            loadConfig();
+        } catch (UHCConfigException e) {
+            // TODO: 04/10/2023 loadDefaults
+            throw new RuntimeException(LOAD_ERROR_MSG);
+        }
     }
 
-    private void loadConfig() {
-        // Load a joining title from configuration values
+    private void loadConfig() throws UHCConfigWrongValueException {
         loadJoiningTitle(Objects.requireNonNull(config.getConfigurationSection(JOINING_TITLE_KEY)));
+        loadGameplaySettings(Objects.requireNonNull(config.getConfigurationSection(GAMEPLAY_KEY)));
+    }
+
+    private void loadConfig(String sectionName) throws UHCConfigWrongValueException {
+        switch (sectionName) {
+            case JOINING_TITLE_KEY -> loadJoiningTitle(Objects.requireNonNull(config.getConfigurationSection(JOINING_TITLE_KEY)));
+            case GAMEPLAY_KEY -> loadGameplaySettings(Objects.requireNonNull(config.getConfigurationSection(GAMEPLAY_KEY)));
+        }
     }
 
     /**
@@ -74,6 +90,20 @@ public class ConfigurationManager {
         );
 
         TitleManager.get().setJoiningTitle(joiningTitle);
+    }
+
+    private void loadGameplaySettings(ConfigurationSection gameplaySection) throws UHCConfigWrongValueException {
+        int gameModeIdx = gameplaySection.getInt(GAME_MODE_KEY);
+        try {
+            GameplayManager.get().setGameMode(UHCGameMode.get(gameModeIdx));
+        } catch (IndexOutOfBoundsException e) {
+            throw new UHCConfigWrongValueException(
+                    gameModeIdx + "",
+                    GAME_MODE_KEY,
+                    GAMEPLAY_KEY,
+                    GAME_MODE_ERROR_MSG.replace("$1", gameModeIdx + "")
+            );
+        }
     }
 
     /**
@@ -96,7 +126,13 @@ public class ConfigurationManager {
 
         Objects.requireNonNull(config.getConfigurationSection(sectionName)).set(optionName, parsedValue);
 
-        loadConfig();
+        try {
+            loadConfig(sectionName);
+            System.out.println("Option " + optionName + " from section " + sectionName + " changed to " + value);
+        } catch (UHCConfigWrongValueException e) {
+            Objects.requireNonNull(config.getConfigurationSection(sectionName)).set(optionName, lastValue);
+            throw e;
+        }
     }
 
     private Object parseValue(Class<?> valueType, String option, String value) throws UHCConfigWrongValueTypeException {
