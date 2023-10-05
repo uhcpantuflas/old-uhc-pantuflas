@@ -1,5 +1,7 @@
 package com.github.gorkiiuss.uhcpantuflas.teams;
 
+import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UHCTeamSizeExceededException;
+import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UnknownUHCTeamException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,7 +35,7 @@ public class UHCTeamCommandExecutor implements CommandExecutor {
                 TeamManager.get().createTeam(teamName);
                 try {
                     TeamManager.get().addMembers(teamName, teamMembers);
-                } catch (UHCTeamError e) {
+                } catch (UHCTeamSizeExceededException e) {
                     try {
                         TeamManager.get().deleteTeam(teamName);
                     } catch (UnknownUHCTeamException ignored) {
@@ -55,14 +57,14 @@ public class UHCTeamCommandExecutor implements CommandExecutor {
                             msg.toString()
                     );
                 } catch (UnknownUHCTeamException e) {
-                    // TODO 05/10/2023 sender.sendMessage(e.getMessage());
+                    sender.sendMessage(e.getMessage());
                 }
             }
             case DELETE_OPTION -> {
                 try {
                     TeamManager.get().deleteTeam(teamName);
                 } catch (UnknownUHCTeamException e) {
-                    // TODO 05/10/2023 sender.sendMessage(e.getMessage());
+                    sender.sendMessage(e.getMessage());
                 }
             }
         }

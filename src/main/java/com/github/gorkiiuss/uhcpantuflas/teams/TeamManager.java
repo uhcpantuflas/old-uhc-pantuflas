@@ -1,5 +1,7 @@
 package com.github.gorkiiuss.uhcpantuflas.teams;
 
+import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UHCTeamSizeExceededException;
+import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UnknownUHCTeamException;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
@@ -81,7 +83,7 @@ public class TeamManager {
         );
     }
 
-    public void addMembers(String teamName, String[] teamMembers) throws UHCTeamError {
+    public void addMembers(String teamName, String[] teamMembers) throws UHCTeamSizeExceededException {
         UHCTeam team = teams.get(teamName);
         team.addMembers(teamMembers);
 
@@ -100,7 +102,7 @@ public class TeamManager {
     }
 
     public String[] getMembers(String teamName) throws UnknownUHCTeamException {
-        if (!teams.containsKey(teamName)) throw new UnknownUHCTeamException(/* TODO 05/10/2023 teamName */);
+        if (!teams.containsKey(teamName)) throw new UnknownUHCTeamException(teamName);
         return teams.get(teamName).getMembers();
     }
 
@@ -109,7 +111,7 @@ public class TeamManager {
     }
 
     public void deleteTeam(String teamName) throws UnknownUHCTeamException {
-        if (!teams.containsKey(teamName)) throw new UnknownUHCTeamException(/* TODO 05/10/2023 teamName */);
+        if (!teams.containsKey(teamName)) throw new UnknownUHCTeamException(teamName);
         teams.remove(teamName);
         Server server = Bukkit.getServer();
         server.dispatchCommand(
@@ -119,12 +121,12 @@ public class TeamManager {
     }
 
     public void wipe() {
-        teams.keySet().forEach(s -> {
+        for (String teamName : teams.keySet()) {
             try {
-                deleteTeam(s);
+                deleteTeam(teamName);
             } catch (UnknownUHCTeamException ignore) {
 
             }
-        });
+        }
     }
 }

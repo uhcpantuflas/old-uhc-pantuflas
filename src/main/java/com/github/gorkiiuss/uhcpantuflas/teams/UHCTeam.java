@@ -1,5 +1,7 @@
 package com.github.gorkiiuss.uhcpantuflas.teams;
 
+import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UHCTeamSizeExceededException;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -20,10 +22,10 @@ public final class UHCTeam {
         return members.size();
     }
 
-    public void addMembers(String[] teamMembers) throws UHCTeamError {
+    public void addMembers(String[] teamMembers) throws UHCTeamSizeExceededException {
         int alreadyTeamMembers = (int) Arrays.stream(teamMembers).filter(members::contains).count();
         if (teamMembers.length + members.size() - alreadyTeamMembers > TeamManager.get().getTeamsSize())
-            throw new UHCTeamError();
+            throw new UHCTeamSizeExceededException();
 
         members.addAll(List.of(teamMembers));
     }
