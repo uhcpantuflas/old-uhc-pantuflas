@@ -69,6 +69,7 @@ public class ConfigurationManager {
     private void loadConfig() throws UHCConfigWrongValueException {
         loadJoiningTitle(Objects.requireNonNull(config.getConfigurationSection(JOINING_TITLE_KEY)));
         loadGameplaySettings(Objects.requireNonNull(config.getConfigurationSection(GAMEPLAY_KEY)));
+        loadTeamsSettings(Objects.requireNonNull(config.getConfigurationSection(TEAMS_KEY)));
     }
 
     private void loadConfig(String sectionName) throws UHCConfigWrongValueException {
