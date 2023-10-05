@@ -24,11 +24,12 @@ public class UHCTeamTabCompleter implements TabCompleter {
                 String partialOption = args[0];
                 addCompletion(completions, UHCTeamCommandExecutor.ADD_OPTION, partialOption);
                 addCompletion(completions, UHCTeamCommandExecutor.SHOW_OPTION, partialOption);
+                addCompletion(completions, UHCTeamCommandExecutor.DELETE_OPTION, partialOption);
             }
             case 2 -> {
                 String option = args[0];
                 String partial = args[1];
-                if (option.equals(UHCTeamCommandExecutor.SHOW_OPTION)) {
+                if (option.equals(UHCTeamCommandExecutor.SHOW_OPTION) || option.equals(UHCTeamCommandExecutor.DELETE_OPTION)) {
                     TeamManager.get().getTeamNames().forEach(teamName ->
                             addCompletion(completions, teamName, partial)
                     );

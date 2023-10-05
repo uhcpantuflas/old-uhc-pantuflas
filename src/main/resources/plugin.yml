@@ -10,5 +10,5 @@ commands:
     aliases: uhc-config
   uhc-team:
     description: Creates UHC teams
-    usage: Wrong usage, must use like this "/uhc-team <add/show> <team name> if add:(<team member 1> <team member 2> ... <team member n>)"
+    usage: Wrong usage, must use like this "/uhc-team <add/show/delete> <team name> if add:(<team member 1> <team member 2> ... <team member n>)"
     aliases: uhc-team

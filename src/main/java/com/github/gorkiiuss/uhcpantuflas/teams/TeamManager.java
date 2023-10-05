@@ -108,7 +108,8 @@ public class TeamManager {
         return teams.keySet();
     }
 
-    public void deleteTeam(String teamName) {
+    public void deleteTeam(String teamName) throws UnknownUHCTeamException {
+        if (!teams.containsKey(teamName)) throw new UnknownUHCTeamException(/* TODO 05/10/2023 teamName */);
         teams.remove(teamName);
         Server server = Bukkit.getServer();
         server.dispatchCommand(
@@ -116,8 +117,14 @@ public class TeamManager {
                 "team remove " + teamName
         );
     }
-    
+
     public void wipe() {
-        teams.keySet().forEach(this::deleteTeam);
+        teams.keySet().forEach(s -> {
+            try {
+                deleteTeam(s);
+            } catch (UnknownUHCTeamException ignore) {
+
+            }
+        });
     }
 }

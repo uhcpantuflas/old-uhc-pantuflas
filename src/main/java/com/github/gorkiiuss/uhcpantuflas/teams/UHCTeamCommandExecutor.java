@@ -11,6 +11,7 @@ public class UHCTeamCommandExecutor implements CommandExecutor {
     public static final String NAME = "uhc-team";
     public static final String ADD_OPTION = "add";
     public static final String SHOW_OPTION = "show";
+    public static final String DELETE_OPTION = "delete";
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -33,7 +34,11 @@ public class UHCTeamCommandExecutor implements CommandExecutor {
                 try {
                     TeamManager.get().addMembers(teamName, teamMembers);
                 } catch (UHCTeamError e) {
-                    TeamManager.get().deleteTeam(teamName);
+                    try {
+                        TeamManager.get().deleteTeam(teamName);
+                    } catch (UnknownUHCTeamException ignored) {
+
+                    }
                     sender.sendMessage(e.getMessage());
                 }
 
@@ -50,7 +55,14 @@ public class UHCTeamCommandExecutor implements CommandExecutor {
                             msg.toString()
                     );
                 } catch (UnknownUHCTeamException e) {
-                    sender.sendMessage(e.getMessage());
+                    // TODO 05/10/2023 sender.sendMessage(e.getMessage());
+                }
+            }
+            case DELETE_OPTION -> {
+                try {
+                    TeamManager.get().deleteTeam(teamName);
+                } catch (UnknownUHCTeamException e) {
+                    // TODO 05/10/2023 sender.sendMessage(e.getMessage());
                 }
             }
         }
