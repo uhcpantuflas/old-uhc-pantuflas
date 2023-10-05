@@ -9,7 +9,22 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The UHCTeamTabCompleter class provides tab-completion suggestions for UHCTeam related commands.
+ *
+ * @version 0.0.1-ALPHA.0
+ * @since 05/10/2023-ALPHA.0
+ */
 public class UHCTeamTabCompleter implements TabCompleter {
+    /**
+     * Provides tab-completion suggestions for UHCTeam related commands.
+     *
+     * @param sender   The command sender.
+     * @param command  The executed command.
+     * @param alias    The alias of the command.
+     * @param args     The arguments provided by the sender.
+     * @return A list of tab-completion suggestions based on the provided arguments.
+     */
     @Nullable
     @Override
     public List<String> onTabComplete(
@@ -40,13 +55,6 @@ public class UHCTeamTabCompleter implements TabCompleter {
         return completions;
     }
 
-    /**
-     * Adds a completion suggestion to the list if it matches the partial completion input.
-     *
-     * @param completions The list of completions to add to.
-     * @param completion The full completion option.
-     * @param partialCompletion The partial completion input.
-     */
     private void addCompletion(ArrayList<String> completions, String completion, String partialCompletion) {
         if (completion.contains(partialCompletion) && !partialCompletion.equals(completion))
             completions.add(completion);

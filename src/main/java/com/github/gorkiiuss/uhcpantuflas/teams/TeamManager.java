@@ -47,6 +47,11 @@ public class TeamManager {
         return teams.values().stream().anyMatch(team -> team.hasMember(playerName));
     }
 
+    /**
+     * Set the maximum size for teams.
+     *
+     * @param teamsSize The maximum size for teams.
+     */
     public void setTeamsSize(int teamsSize) {
         this.teamsSize = teamsSize;
 
@@ -55,6 +60,11 @@ public class TeamManager {
         });
     }
 
+    /**
+     * Set the friendly fire option for teams.
+     *
+     * @param friendlyFire True to enable friendly fire, false to disable it.
+     */
     public void setFriendlyFire(boolean friendlyFire) {
         this.friendlyFire = friendlyFire;
 
@@ -68,6 +78,11 @@ public class TeamManager {
         );
     }
 
+    /**
+     * Create a new team with the specified name.
+     *
+     * @param teamName The name of the new team.
+     */
     public void createTeam(String teamName) {
         this.teams.put(teamName, new UHCTeam());
 
@@ -83,6 +98,13 @@ public class TeamManager {
         );
     }
 
+    /**
+     * Add members to an existing team.
+     *
+     * @param teamName     The name of the team.
+     * @param teamMembers  An array of player names to add to the team.
+     * @throws UHCTeamSizeExceededException If adding members exceeds the team's size limit.
+     */
     public void addMembers(String teamName, String[] teamMembers) throws UHCTeamSizeExceededException {
         UHCTeam team = teams.get(teamName);
         team.addMembers(teamMembers);
@@ -97,19 +119,42 @@ public class TeamManager {
         }
     }
 
+    /**
+     * Get the maximum size for teams.
+     *
+     * @return The maximum size for teams.
+     */
     public int getTeamsSize() {
         return teamsSize;
     }
 
+    /**
+     * Get an array of member names for a specified team.
+     *
+     * @param teamName The name of the team.
+     * @return An array of member names.
+     * @throws UnknownUHCTeamException If the team does not exist.
+     */
     public String[] getMembers(String teamName) throws UnknownUHCTeamException {
         if (!teams.containsKey(teamName)) throw new UnknownUHCTeamException(teamName);
         return teams.get(teamName).getMembers();
     }
 
+    /**
+     * Get a set of team names.
+     *
+     * @return A set of team names.
+     */
     public Set<String> getTeamNames() {
         return teams.keySet();
     }
 
+    /**
+     * Delete an existing team.
+     *
+     * @param teamName The name of the team to delete.
+     * @throws UnknownUHCTeamException If the team does not exist.
+     */
     public void deleteTeam(String teamName) throws UnknownUHCTeamException {
         if (!teams.containsKey(teamName)) throw new UnknownUHCTeamException(teamName);
         teams.remove(teamName);
@@ -120,6 +165,9 @@ public class TeamManager {
         );
     }
 
+    /**
+     * Delete all teams.
+     */
     public void wipe() {
         for (String teamName : teams.keySet()) {
             try {

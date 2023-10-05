@@ -32,6 +32,13 @@ import java.util.Objects;
 @SuppressWarnings("unused")
 public final class UHCPantuflas extends JavaPlugin {
 
+    /*TODO 05/10/2023 add javadoc
+        * Called when the plugin is enabled.
+        * <p>
+        * This method is automatically invoked when the plugin is loaded and enabled
+        * by the server. It should be used for any setup, initialization, and registration
+        * of listeners and commands required by the plugin.
+    */
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -53,6 +60,13 @@ public final class UHCPantuflas extends JavaPlugin {
         System.out.println("Plugin UHC Pantuflas-0.0.0-INITIAL successfully charged");
     }
 
+    /*TODO 05/10/2023 add javadoc
+     * Called when the plugin is disabled.
+     * <p>
+     * This method is automatically invoked when the plugin is unloaded and disabled
+     * by the server. It should be used for any cleanup, saving configuration, and
+     * releasing resources held by the plugin.
+     */
     @Override
     public void onDisable() {
         // Plugin shutdown logic
