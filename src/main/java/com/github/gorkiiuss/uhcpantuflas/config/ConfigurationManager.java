@@ -3,6 +3,7 @@ package com.github.gorkiiuss.uhcpantuflas.config;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.UHCGameMode;
 import com.github.gorkiiuss.uhcpantuflas.config.exceptions.*;
+import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
 import com.github.gorkiiuss.uhcpantuflas.title.Title;
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
 import org.bukkit.configuration.ConfigurationSection;
@@ -28,10 +29,13 @@ public class ConfigurationManager {
     public static final String FADE_OUT_KEY = "fade-out";
     public static final String GAMEPLAY_KEY = "gameplay";
     public static final String GAME_MODE_KEY = "mode";
+    public static final String TEAMS_KEY = "teams";
+    public static final String SIZE_KEY = "size";
+    public static final String FRIENDLY_FIRE_KEY = "friendly_fire";
 
     private static final String LOAD_ERROR_MSG = "Fatal error occurred while loading settings";
     private static final String GAME_MODE_ERROR_MSG = "only " + UHCGameMode.values().length + " game-modes exist and you tried to set it to $1";
-
+    private static final String TEAMS_SIZE_ERROR_MSG = "The team size must be at least 1";
     private FileConfiguration config;
 
     private ConfigurationManager() {
@@ -66,12 +70,14 @@ public class ConfigurationManager {
     private void loadConfig() throws UHCConfigWrongValueException {
         loadJoiningTitle(Objects.requireNonNull(config.getConfigurationSection(JOINING_TITLE_KEY)));
         loadGameplaySettings(Objects.requireNonNull(config.getConfigurationSection(GAMEPLAY_KEY)));
+        loadTeamsSettings(Objects.requireNonNull(config.getConfigurationSection(TEAMS_KEY)));
     }
 
     private void loadConfig(String sectionName) throws UHCConfigWrongValueException {
         switch (sectionName) {
             case JOINING_TITLE_KEY -> loadJoiningTitle(Objects.requireNonNull(config.getConfigurationSection(JOINING_TITLE_KEY)));
             case GAMEPLAY_KEY -> loadGameplaySettings(Objects.requireNonNull(config.getConfigurationSection(GAMEPLAY_KEY)));
+            case TEAMS_KEY -> loadTeamsSettings(Objects.requireNonNull(config.getConfigurationSection(TEAMS_KEY)));
         }
     }
 
@@ -104,6 +110,21 @@ public class ConfigurationManager {
                     GAME_MODE_ERROR_MSG.replace("$1", gameModeIdx + "")
             );
         }
+    }
+
+    private void loadTeamsSettings(ConfigurationSection teamsSection) throws UHCConfigWrongValueException {
+        int teamsSize = teamsSection.getInt(SIZE_KEY);
+        if (teamsSize < 1) throw new UHCConfigWrongValueException(
+                teamsSize + "",
+                TEAMS_KEY,
+                SIZE_KEY,
+                TEAMS_SIZE_ERROR_MSG
+        );
+
+        TeamManager.get().setTeamsSize(teamsSize);
+
+        boolean friendlyFire = teamsSection.getBoolean(FRIENDLY_FIRE_KEY);
+        TeamManager.get().setFriendlyFire(friendlyFire);
     }
 
     /**
@@ -141,7 +162,9 @@ public class ConfigurationManager {
                 return Integer.parseInt(value);
             } else if (value.charAt(0) == '\"' && value.charAt(value.length() - 1) == '\"') { // Is String
                 return value.substring(1, value.length() - 1);
-            } else {
+            } else if (value.equals("true") || value.equals("false")) {
+                return Boolean.parseBoolean(value);
+            }else {
                 throw new UHCConfigWrongValueTypeException(option, valueType);
             }
         } catch (NumberFormatException e) {

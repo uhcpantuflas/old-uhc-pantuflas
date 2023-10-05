@@ -1,5 +1,9 @@
 com.github.gorkiiuss.uhcpantuflas
 com.github.gorkiiuss.uhcpantuflas.config
 com.github.gorkiiuss.uhcpantuflas.config.exceptions
-com.github.gorkiiuss.uhcpantuflas.text
+com.github.gorkiiuss.uhcpantuflas.gameplay
+com.github.gorkiiuss.uhcpantuflas.player
+com.github.gorkiiuss.uhcpantuflas.teams
+com.github.gorkiiuss.uhcpantuflas.teams.exceptions
 com.github.gorkiiuss.uhcpantuflas.title
+com.github.gorkiiuss.uhcpantuflas.utils.text
