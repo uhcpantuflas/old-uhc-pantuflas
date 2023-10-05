@@ -31,6 +31,7 @@ public class ConfigurationManager {
     public static final String GAME_MODE_KEY = "mode";
     public static final String TEAMS_KEY = "teams";
     public static final String SIZE_KEY = "size";
+    public static final String FRIENDLY_FIRE_KEY = "friendly_fire";
 
     private static final String LOAD_ERROR_MSG = "Fatal error occurred while loading settings";
     private static final String GAME_MODE_ERROR_MSG = "only " + UHCGameMode.values().length + " game-modes exist and you tried to set it to $1";
@@ -121,6 +122,9 @@ public class ConfigurationManager {
         );
 
         TeamManager.get().setTeamsSize(teamsSize);
+
+        boolean friendlyFire = teamsSection.getBoolean(FRIENDLY_FIRE_KEY);
+        TeamManager.get().setFriendlyFire(friendlyFire);
     }
 
     /**
@@ -158,7 +162,9 @@ public class ConfigurationManager {
                 return Integer.parseInt(value);
             } else if (value.charAt(0) == '\"' && value.charAt(value.length() - 1) == '\"') { // Is String
                 return value.substring(1, value.length() - 1);
-            } else {
+            } else if (value.equals("true") || value.equals("false")) {
+                return Boolean.parseBoolean(value);
+            }else {
                 throw new UHCConfigWrongValueTypeException(option, valueType);
             }
         } catch (NumberFormatException e) {

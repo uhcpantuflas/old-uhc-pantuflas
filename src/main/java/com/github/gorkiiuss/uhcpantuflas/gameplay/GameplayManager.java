@@ -31,7 +31,6 @@ public class GameplayManager {
      */
     public void setGameMode(UHCGameMode gameMode) {
         this.gameMode = gameMode;
-        System.out.println("Game mode set to " + gameMode);
     }
 
     /**

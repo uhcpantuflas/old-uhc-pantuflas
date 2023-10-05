@@ -1,5 +1,9 @@
 package com.github.gorkiiuss.uhcpantuflas.teams;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +19,7 @@ public class TeamManager {
     private static TeamManager instance;
     private final Map<String, UHCTeam> teams = new HashMap<>();
     private int teamsSize;
+    private boolean friendlyFire;
 
     private TeamManager() {
         // Private constructor to enforce singleton pattern
@@ -46,17 +51,48 @@ public class TeamManager {
         teams.values().stream().filter(team -> team.getSize() > teamsSize).forEach(team -> {
             // TODO: 04/10/2023 Do something with the leftover teammates
         });
+    }
 
-        System.out.println("Team size set to " + teamsSize);
+    public void setFriendlyFire(boolean friendlyFire) {
+        this.friendlyFire = friendlyFire;
+
+        Server server = Bukkit.getServer();
+        CommandSender sender = server.getConsoleSender();
+        teams.keySet().forEach(teamName ->
+                server.dispatchCommand(
+                        sender,
+                        "team modify " + teamName + " friendlyFire " + friendlyFire
+                )
+        );
     }
 
     public void createTeam(String teamName) {
         this.teams.put(teamName, new UHCTeam());
+
+        Server server = Bukkit.getServer();
+        CommandSender sender = server.getConsoleSender();
+        server.dispatchCommand(
+                sender,
+                "team add " + teamName
+        );
+        server.dispatchCommand(
+                sender,
+                "team modify " + teamName + " friendlyFire " + friendlyFire
+        );
     }
 
     public void addMembers(String teamName, String[] teamMembers) throws UHCTeamError {
         UHCTeam team = teams.get(teamName);
         team.addMembers(teamMembers);
+
+        Server server = Bukkit.getServer();
+        CommandSender sender = server.getConsoleSender();
+        for (String teamMember : teamMembers) {
+            server.dispatchCommand(
+                    sender,
+                    "team join " + teamName + " " + teamMember
+            );
+        }
     }
 
     public int getTeamsSize() {
@@ -74,5 +110,14 @@ public class TeamManager {
 
     public void deleteTeam(String teamName) {
         teams.remove(teamName);
+        Server server = Bukkit.getServer();
+        server.dispatchCommand(
+                server.getConsoleSender(),
+                "team remove " + teamName
+        );
+    }
+    
+    public void wipe() {
+        teams.keySet().forEach(this::deleteTeam);
     }
 }

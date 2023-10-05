@@ -5,6 +5,7 @@ import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigTabCompleter;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerJoinListener;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerLoginListener;
+import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.UHCTeamCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.teams.UHCTeamTabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -56,5 +57,8 @@ public final class UHCPantuflas extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         saveConfig();
+
+        // Remove all data from managers
+        TeamManager.get().wipe();
     }
 }

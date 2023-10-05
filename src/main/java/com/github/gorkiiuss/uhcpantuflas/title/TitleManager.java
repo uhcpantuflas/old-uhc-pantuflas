@@ -79,7 +79,6 @@ public class TitleManager {
      */
     public void setJoiningTitle(Title joiningTitle) {
         this.joiningTitle = formatAsJoining(joiningTitle);
-        System.out.println("Joining title set to " + this.joiningTitle);
     }
 
     private Title formatAsJoining(Title title) {
