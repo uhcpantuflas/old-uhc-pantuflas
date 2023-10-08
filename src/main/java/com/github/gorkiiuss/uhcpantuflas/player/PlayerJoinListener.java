@@ -16,15 +16,17 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class PlayerJoinListener implements Listener {
     /**
-     * Handles the player join event and displays a title to the joining player.
+     * Handles the player join event.
      *
      * @param event The PlayerJoinEvent instance.
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        Player joinedPlayer = event.getPlayer();
+        PlayerManager.get().registerPlayer(new UHCPlayer(joinedPlayer.getName()));
+
         if (GameplayManager.get().getGameState() == GameState.BEGINNING) {
             // Show title
-            Player joinedPlayer = event.getPlayer();
 
             TitleManager.get().sendTitle(
                     joinedPlayer.getName(),

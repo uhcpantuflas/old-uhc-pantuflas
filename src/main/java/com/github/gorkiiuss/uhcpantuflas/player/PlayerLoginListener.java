@@ -15,7 +15,8 @@ import org.bukkit.event.player.PlayerLoginEvent;
  * @since 04/10/2023-ALPHA.0
  */
 public class PlayerLoginListener implements Listener {
-    private final String PLAYER_NO_TEAM_KICK_MSG = "You have to be on a team to participate!";
+    private static final String PLAYER_NOT_REGISTERED_KICK_MSG = "The game has already started, you should have entered before!";
+    private static final String PLAYER_NO_TEAM_KICK_MSG = "You have to be on a team to participate!";
 
     /**
      * Handles player login events and prevents players from logging in if they are not on a team in the MIN_ZERO_TEAMS game mode.
@@ -24,12 +25,17 @@ public class PlayerLoginListener implements Listener {
      */
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent event) {
+        String loggedPlayerName = event.getPlayer().getName();
+
         if (GameplayManager.get().getGameState() == GameState.BEGINNING) {
             if (GameplayManager.get().getGameMode() == UHCGameMode.MIN_ZERO_TEAMS) {
-                String loggedPlayerName = event.getPlayer().getName();
 
                 if (!TeamManager.get().isPlayerInATeam(loggedPlayerName))
                     event.disallow(PlayerLoginEvent.Result.KICK_OTHER, PLAYER_NO_TEAM_KICK_MSG);
+            }
+        } else {
+            if (PlayerManager.get().isPlayerRegistered(loggedPlayerName)) {
+                event.disallow(PlayerLoginEvent.Result.KICK_OTHER, PLAYER_NOT_REGISTERED_KICK_MSG);
             }
         }
     }
