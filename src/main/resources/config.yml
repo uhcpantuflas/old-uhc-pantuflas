@@ -6,6 +6,7 @@ joining-title:
   fade-out: 20
 gameplay:
   mode: 0 # Min Zero Teams
+  initial-game-state: 0 # BEGINNING
 teams:
   size: 2
   friendly_fire: false

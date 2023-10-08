@@ -1,5 +1,9 @@
 package com.github.gorkiiuss.uhcpantuflas.gameplay;
 
 public enum GameState {
-    BEGINNING
+    BEGINNING;
+
+    public static GameState get(int gameStateIdx) {
+        return values()[gameStateIdx];
+    }
 }
