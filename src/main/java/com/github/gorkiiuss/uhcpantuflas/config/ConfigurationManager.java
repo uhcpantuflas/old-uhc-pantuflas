@@ -1,6 +1,5 @@
 package com.github.gorkiiuss.uhcpantuflas.config;
 
-import com.github.gorkiiuss.uhcpantuflas.gameplay.GameState;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.UHCGameMode;
 import com.github.gorkiiuss.uhcpantuflas.config.exceptions.*;
@@ -30,14 +29,12 @@ public class ConfigurationManager {
     public static final String FADE_OUT_KEY = "fade-out";
     public static final String GAMEPLAY_KEY = "gameplay";
     public static final String GAME_MODE_KEY = "mode";
-    public static final String GAME_STATE_KEY = "initial-game-state";
     public static final String TEAMS_KEY = "teams";
     public static final String SIZE_KEY = "size";
     public static final String FRIENDLY_FIRE_KEY = "friendly_fire";
 
     private static final String LOAD_ERROR_MSG = "Fatal error occurred while loading settings";
     private static final String GAME_MODE_ERROR_MSG = "only " + UHCGameMode.values().length + " game-modes exist and you tried to set it to $1";
-    private static final String GAME_STATE_ERROR_MSG = "only " + GameState.values().length + " game states exist and you tried to set it to $1";
     private static final String TEAMS_SIZE_ERROR_MSG = "The team size must be at least 1";
     private FileConfiguration config;
 
@@ -111,17 +108,6 @@ public class ConfigurationManager {
                     GAME_MODE_KEY,
                     GAMEPLAY_KEY,
                     GAME_MODE_ERROR_MSG.replace("$1", gameModeIdx + "")
-            );
-        }
-        int gameStateIdx = gameplaySection.getInt(GAME_STATE_KEY);
-        try {
-            GameplayManager.get().setGameState(GameState.get(gameStateIdx));
-        } catch (IndexOutOfBoundsException e) {
-            throw new UHCConfigWrongValueException(
-                    gameModeIdx + "",
-                    GAME_STATE_KEY,
-                    GAMEPLAY_KEY,
-                    GAME_STATE_ERROR_MSG.replace("$1", gameModeIdx + "")
             );
         }
     }

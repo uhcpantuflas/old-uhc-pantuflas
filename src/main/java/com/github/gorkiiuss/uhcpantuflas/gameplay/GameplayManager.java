@@ -9,8 +9,6 @@ package com.github.gorkiiuss.uhcpantuflas.gameplay;
 public class GameplayManager {
     private static GameplayManager instance;
     private UHCGameMode gameMode;
-    private GameState gameState;
-    private boolean gameStateChanged;
 
     private GameplayManager() {
         // Private constructor to enforce singleton pattern
@@ -42,34 +40,5 @@ public class GameplayManager {
      */
     public UHCGameMode getGameMode() {
         return gameMode;
-    }
-
-    /**
-     * Set the current game state.
-     *
-     * @param gameState The new game state to set.
-     */
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-        this.gameStateChanged = true;
-    }
-
-    /**
-     * Get the current game state.
-     *
-     * @return The current game state.
-     */
-    public GameState getGameState() {
-        this.gameStateChanged = false;
-        return gameState;
-    }
-
-    /**
-     * Get if the game state has changed.
-     *
-     * @return If the current game state has changed.
-     */
-    public boolean hasGameStateChanged() {
-        return gameStateChanged;
     }
 }

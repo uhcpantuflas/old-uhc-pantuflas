@@ -56,10 +56,7 @@ public class UHCConfigTabCompleter implements TabCompleter {
                         addCompletion(completions, ConfigurationManager.STAY_KEY, partialOption);
                         addCompletion(completions, ConfigurationManager.FADE_OUT_KEY, partialOption);
                     }
-                    case ConfigurationManager.GAMEPLAY_KEY -> {
-                        addCompletion(completions, ConfigurationManager.GAME_MODE_KEY, partialOption);
-                        addCompletion(completions, ConfigurationManager.GAME_STATE_KEY, partialOption);
-                    }
+                    case ConfigurationManager.GAMEPLAY_KEY -> addCompletion(completions, ConfigurationManager.GAME_MODE_KEY, partialOption);
                     case ConfigurationManager.TEAMS_KEY -> {
                         addCompletion(completions, ConfigurationManager.SIZE_KEY, partialOption);
                         addCompletion(completions, ConfigurationManager.FRIENDLY_FIRE_KEY, partialOption);
