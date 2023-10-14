@@ -45,4 +45,13 @@ public class PlayerManager {
     public boolean isPlayerRegistered(String playerName) {
         return players.stream().anyMatch(uhcPlayer -> uhcPlayer.hasName(playerName));
     }
+
+    public void immobilizeAll() {
+        players.forEach(UHCPlayer::immobilize);
+    }
+
+    public boolean isPlayerImmobilized(String playerName) {
+        UHCPlayer player = players.stream().filter(p -> p.hasName(playerName)).findFirst().orElse(null);
+        return player != null && player.isImmobilized();
+    }
 }

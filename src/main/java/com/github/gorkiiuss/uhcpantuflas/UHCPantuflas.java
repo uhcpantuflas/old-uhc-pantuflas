@@ -6,6 +6,7 @@ import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigTabCompleter;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.UHCStartCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerJoinListener;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerLoginListener;
+import com.github.gorkiiuss.uhcpantuflas.player.PlayerMoveListener;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.UHCTeamCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.teams.UHCTeamTabCompleter;
@@ -51,6 +52,7 @@ public final class UHCPantuflas extends JavaPlugin {
         // Register all listeners
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerLoginListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
 
         // Register all commands
         Objects.requireNonNull(getCommand(UHCConfigCommandExecutor.NAME)).setExecutor(new UHCConfigCommandExecutor());

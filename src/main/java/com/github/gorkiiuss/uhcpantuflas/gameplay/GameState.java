@@ -12,7 +12,7 @@ public enum GameState {
      * Represents the beginning state of a UHC game.
      * This is typically the initial state when players are preparing for the game.
      */
-    BEGINNING;
+    BEGINNING, PLAYING;
 
     /**
      * Gets the GameState corresponding to the provided game state index.

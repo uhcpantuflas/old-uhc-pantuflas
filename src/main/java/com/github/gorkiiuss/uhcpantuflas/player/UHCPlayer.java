@@ -10,6 +10,7 @@ package com.github.gorkiiuss.uhcpantuflas.player;
 public final class UHCPlayer {
 
     private final String name;
+    private boolean immobilized;
 
     /**
      * Constructs a UHCPlayer object with the specified player name.
@@ -28,5 +29,14 @@ public final class UHCPlayer {
      */
     public boolean hasName(String name) {
         return this.name.equals(name);
+    }
+
+    public void immobilize() {
+        immobilized = true;
+        System.out.println("Player " + name + " has been immobilized");
+    }
+
+    public boolean isImmobilized() {
+        return immobilized;
     }
 }
