@@ -16,9 +16,17 @@ public class TitleManager {
     private static TitleManager instance;
 
     private Title joiningTitle;
+    private final Title startingTitle;
 
     private TitleManager() {
         // Private constructor to enforce singleton pattern
+        startingTitle  = formatAsStarting(new Title(
+                "Starting the game...",
+                "May the last player win...",
+                20,
+                100,
+                20
+        )); // TODO: 14/10/2023 make configurable
     }
 
     /**
@@ -58,6 +66,31 @@ public class TitleManager {
     }
 
     /**
+     * Sends a title with optional JSON formatting to all players.
+     * This method allows for enhanced text formatting using JSON.
+     *
+     * @param title      The Title object containing the title, subtitle, and display parameters.
+     */
+    public void sendTitle(Title title) {
+        Server server = Bukkit.getServer();
+        CommandSender sender = server.getConsoleSender();
+
+        server.dispatchCommand(
+                sender,
+                "title @a times " + title.getFadeIn() + " " + title.getStay() + " " +
+                        title.getFadeOut()
+        );
+        server.dispatchCommand(
+                sender,
+                "title @a subtitle " + title.getSubtitle()
+        );
+        server.dispatchCommand(
+                sender,
+                "title @a title " + title.getTitle()
+        );
+    }
+
+    /**
      * Sends a predefined built-in title to a player.
      *
      * @param playerName The name of the player to send the title to.
@@ -68,6 +101,21 @@ public class TitleManager {
                 playerName,
                 switch (title) {
                     case JOINING -> joiningTitle;
+                    case STARTING -> startingTitle;
+                }
+        );
+    }
+
+    /**
+     * Sends a predefined built-in title to all players.
+     *
+     * @param title      The BuiltInTitle enum specifying the default title to send.
+     */
+    public void sendTitle(BuiltInTitle title) {
+        sendTitle(
+                switch (title) {
+                    case JOINING -> joiningTitle;
+                    case STARTING -> startingTitle;
                 }
         );
     }
@@ -92,10 +140,22 @@ public class TitleManager {
         return new Title(joiningTitle, joiningSubtitle, title.getFadeIn(), title.getStay(), title.getFadeOut());
     }
 
+    private Title formatAsStarting(Title title) {
+        String startingTitle = new MinecraftTextBuilder()
+                .addText(title.getTitle()).bold().color(MinecraftColor.RED)
+                .build();
+
+        String startingSubtitle = new MinecraftTextBuilder().addText(title.getSubtitle()).color(MinecraftColor.GRAY).build();
+
+        return new Title(startingTitle, startingSubtitle, title.getFadeIn(), title.getStay(), title.getFadeOut());
+    }
+
     /**
      * An enum containing predefined built-in titles.
      */
     public enum BuiltInTitle {
-        JOINING
+        JOINING,
+        STARTING
+        ;
     }
 }

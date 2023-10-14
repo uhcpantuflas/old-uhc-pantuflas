@@ -1,5 +1,9 @@
 package com.github.gorkiiuss.uhcpantuflas.player;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
+
 import java.util.ArrayList;
 
 /**
@@ -46,12 +50,51 @@ public class PlayerManager {
         return players.stream().anyMatch(uhcPlayer -> uhcPlayer.hasName(playerName));
     }
 
-    public void immobilizeAll() {
-        players.forEach(UHCPlayer::immobilize);
+    public void setImmobilized(boolean immobilized) {
+        players.forEach( player -> player.setImmobilized(immobilized));
+
     }
 
     public boolean isPlayerImmobilized(String playerName) {
         UHCPlayer player = players.stream().filter(p -> p.hasName(playerName)).findFirst().orElse(null);
         return player != null && player.isImmobilized();
+    }
+
+    public void resetAll() {
+        Server server = Bukkit.getServer();
+        CommandSender sender = server.getConsoleSender();
+
+        // Clear inventory
+        server.dispatchCommand(
+                sender,
+                "clear @a"
+        );
+
+        // Clear XP
+        server.dispatchCommand(
+                sender,
+                "xp set @a 0 points"
+        );
+        server.dispatchCommand(
+                sender,
+                "xp set @a 0 levels"
+        );
+
+        // Raise health
+        server.dispatchCommand(
+                sender,
+                "effect give @a regeneration 1 255 true"
+        );
+
+        // Lower hunger
+        server.dispatchCommand(
+                sender,
+                "effect give @a saturation 1 255 true"
+        );
+    }
+
+    public void slowFallingAll() {
+        Server server = Bukkit.getServer();
+        server.dispatchCommand(server.getConsoleSender(), "effect give @a slow_falling 10 1 true");
     }
 }

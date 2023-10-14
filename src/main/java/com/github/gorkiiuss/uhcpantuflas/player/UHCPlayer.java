@@ -39,4 +39,17 @@ public final class UHCPlayer {
     public boolean isImmobilized() {
         return immobilized;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void reset() {
+
+    }
+
+    public void setImmobilized(boolean immobilized) {
+        this.immobilized = immobilized;
+        System.out.println("Player " + name + " " + (immobilized? "can now move": "is immobilized"));
+    }
 }

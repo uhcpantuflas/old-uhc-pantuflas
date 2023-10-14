@@ -177,4 +177,13 @@ public class TeamManager {
             }
         }
     }
+
+    public void tpToInitialPositions() {
+        // TODO: 14/10/2023: this is temporal
+        Server server = Bukkit.getServer();
+        server.dispatchCommand(
+                server.getConsoleSender(),
+                "execute as @a at @s run tp ~ ~50 ~"
+        );
+    }
 }
