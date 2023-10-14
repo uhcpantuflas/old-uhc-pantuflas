@@ -3,6 +3,7 @@ package com.github.gorkiiuss.uhcpantuflas;
 import com.github.gorkiiuss.uhcpantuflas.config.ConfigurationManager;
 import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigTabCompleter;
+import com.github.gorkiiuss.uhcpantuflas.gameplay.UHCStartCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerJoinListener;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerLoginListener;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
@@ -54,8 +55,11 @@ public final class UHCPantuflas extends JavaPlugin {
         // Register all commands
         Objects.requireNonNull(getCommand(UHCConfigCommandExecutor.NAME)).setExecutor(new UHCConfigCommandExecutor());
         Objects.requireNonNull(getCommand(UHCConfigCommandExecutor.NAME)).setTabCompleter(new UHCConfigTabCompleter());
+
         Objects.requireNonNull(getCommand(UHCTeamCommandExecutor.NAME)).setExecutor(new UHCTeamCommandExecutor());
         Objects.requireNonNull(getCommand(UHCTeamCommandExecutor.NAME)).setTabCompleter(new UHCTeamTabCompleter());
+
+        Objects.requireNonNull(getCommand(UHCStartCommandExecutor.NAME)).setExecutor(new UHCStartCommandExecutor());
 
         System.out.println("Plugin UHC Pantuflas-0.0.0-INITIAL successfully charged");
     }
