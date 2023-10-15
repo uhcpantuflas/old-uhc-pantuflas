@@ -3,6 +3,7 @@ package com.github.gorkiiuss.uhcpantuflas.player;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.GameState;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
+import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,6 +34,9 @@ public class PlayerJoinListener implements Listener {
 
             // Register in PlayerManager
             PlayerManager.get().registerPlayer(new UHCPlayer(joinedPlayer.getName()));
+
+            //TP to 0, 0
+            joinedPlayer.teleport(WorldManager.get().getOverworld00());
         }
     }
 }

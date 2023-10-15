@@ -10,6 +10,7 @@ public class GameplayManager {
     private static GameplayManager instance;
     private UHCGameMode gameMode;
     private GameState gameState = GameState.BEGINNING;
+    private final int density = 280; // TODO: 15/10/2023 make configurable
 
     private GameplayManager() {
         // Private constructor to enforce singleton pattern
@@ -49,5 +50,9 @@ public class GameplayManager {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public int getDensity() {
+        return density;
     }
 }

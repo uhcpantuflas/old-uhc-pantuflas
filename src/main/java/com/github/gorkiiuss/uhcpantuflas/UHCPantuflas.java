@@ -10,6 +10,7 @@ import com.github.gorkiiuss.uhcpantuflas.player.PlayerMoveListener;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.UHCTeamCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.teams.UHCTeamTabCompleter;
+import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -62,6 +63,9 @@ public final class UHCPantuflas extends JavaPlugin {
         Objects.requireNonNull(getCommand(UHCTeamCommandExecutor.NAME)).setTabCompleter(new UHCTeamTabCompleter());
 
         Objects.requireNonNull(getCommand(UHCStartCommandExecutor.NAME)).setExecutor(new UHCStartCommandExecutor());
+
+        // Initialization
+        WorldManager.get().init();
 
         System.out.println("Plugin UHC Pantuflas-0.0.0-INITIAL successfully charged");
     }

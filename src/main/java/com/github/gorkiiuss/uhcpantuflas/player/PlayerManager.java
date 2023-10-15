@@ -97,4 +97,8 @@ public class PlayerManager {
         Server server = Bukkit.getServer();
         server.dispatchCommand(server.getConsoleSender(), "effect give @a slow_falling 10 1 true");
     }
+
+    public int playerCount() {
+        return players.size();
+    }
 }
