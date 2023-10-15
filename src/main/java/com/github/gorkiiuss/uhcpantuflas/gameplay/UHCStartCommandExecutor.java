@@ -3,6 +3,7 @@ package com.github.gorkiiuss.uhcpantuflas.gameplay;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
+import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,6 +18,9 @@ public class UHCStartCommandExecutor implements CommandExecutor {
 
         // Immobilize players
         PlayerManager.get().setImmobilized(true);
+
+        // Set world size
+        WorldManager.get().setVariableWorldSize();
 
         // TP players
         TeamManager.get().tpToInitialPositions();

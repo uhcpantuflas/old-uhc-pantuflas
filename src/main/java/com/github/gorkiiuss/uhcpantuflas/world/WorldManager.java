@@ -1,5 +1,7 @@
 package com.github.gorkiiuss.uhcpantuflas.world;
 
+import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
+import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -18,16 +20,16 @@ public class WorldManager {
         List<World> worlds = Bukkit.getWorlds();
 
         WorldBorder overworldWorldBorder = worlds.get(0).getWorldBorder();
-        WorldBorder netherWorldBorder = worlds.get(1).getWorldBorder();
+//        WorldBorder netherWorldBorder = worlds.get(1).getWorldBorder(); todo 15/10/2023 fix nether tiny size
 
         int initialWorldSize = 100; // TODO: 15/10/2023 make configurable
-        int initialNetherSize = initialWorldSize / 8;
+//        int initialNetherSize = initialWorldSize / 8;
 
         overworldWorldBorder.setCenter(0, 0);
         overworldWorldBorder.setSize(initialWorldSize);
 
-        netherWorldBorder.setCenter(0, 0);
-        netherWorldBorder.setSize(initialNetherSize);
+//        netherWorldBorder.setCenter(0, 0);
+//        netherWorldBorder.setSize(initialNetherSize);
     }
 
     public Location getOverworld00() {
@@ -38,5 +40,10 @@ public class WorldManager {
     public static synchronized WorldManager get() {
         if (instance == null) instance = new WorldManager();
         return instance;
+    }
+
+    public void setVariableWorldSize() {
+        int diameter = (int) Math.sqrt(PlayerManager.get().playerCount() * GameplayManager.get().getDensity());
+        Bukkit.getWorlds().get(0).getWorldBorder().setSize(diameter);
     }
 }
