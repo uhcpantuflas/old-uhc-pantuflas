@@ -40,16 +40,6 @@ public class PlayerManager {
         players.add(player);
     }
 
-    /**
-     * Check if a player is registered.
-     *
-     * @param playerName The name of the player to check.
-     * @return True if the player is registered, otherwise false.
-     */
-    public boolean isPlayerRegistered(String playerName) {
-        return players.stream().anyMatch(uhcPlayer -> uhcPlayer.hasName(playerName));
-    }
-
     public void setImmobilized(boolean immobilized) {
         players.forEach( player -> player.setImmobilized(immobilized));
 
@@ -98,7 +88,7 @@ public class PlayerManager {
         server.dispatchCommand(server.getConsoleSender(), "effect give @a slow_falling 10 1 true");
     }
 
-    public int playerCount() {
+    public int count() {
         return players.size();
     }
 }

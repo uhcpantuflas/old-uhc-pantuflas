@@ -66,6 +66,7 @@ public final class UHCPantuflas extends JavaPlugin {
 
         // Initialization
         WorldManager.get().init();
+        TimeManager.get().init(this);
 
         System.out.println("Plugin UHC Pantuflas-0.0.0-INITIAL successfully charged");
     }

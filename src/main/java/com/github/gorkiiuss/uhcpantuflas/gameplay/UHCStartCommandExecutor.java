@@ -1,5 +1,6 @@
 package com.github.gorkiiuss.uhcpantuflas.gameplay;
 
+import com.github.gorkiiuss.uhcpantuflas.TimeManager;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
@@ -20,7 +21,8 @@ public class UHCStartCommandExecutor implements CommandExecutor {
         PlayerManager.get().setImmobilized(true);
 
         // Set world size
-        WorldManager.get().setVariableWorldSize();
+        WorldManager.get().updateDiameter();
+        WorldManager.get().setWorldBorder(WorldManager.get().getDiameter(), 0);
 
         // TP players
         TeamManager.get().tpToInitialPositions();
@@ -38,7 +40,7 @@ public class UHCStartCommandExecutor implements CommandExecutor {
         PlayerManager.get().slowFallingAll();
 
         // Set timers
-        // TODO: 14/10/2023 TimeManager.get().initTimers();
+        TimeManager.get().initTimers();
 
         GameplayManager.get().setGameState(GameState.PLAYING);
         return true;

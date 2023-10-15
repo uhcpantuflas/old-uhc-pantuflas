@@ -162,7 +162,7 @@ public class TeamManager {
         server.dispatchCommand(
                 server.getConsoleSender(),
                 "team remove " + teamName
-        );
+        ); // TODO: 15/10/2023 doesn't delete well
     }
 
     /**
@@ -185,5 +185,9 @@ public class TeamManager {
                 server.getConsoleSender(),
                 "execute as @a at @s run tp ~ ~50 ~"
         );
+    }
+
+    public int count() {
+        return teams.size();
     }
 }
