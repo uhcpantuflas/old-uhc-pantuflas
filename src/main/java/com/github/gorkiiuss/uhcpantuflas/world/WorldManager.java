@@ -73,4 +73,8 @@ public class WorldManager {
 
         setWorldBorder(battleLandSize, seconds);
     }
+
+    public int getY(int x, int yOffset, int z) {
+        return Bukkit.getWorlds().get(0).getHighestBlockYAt(x, z) + yOffset;
+    }
 }
