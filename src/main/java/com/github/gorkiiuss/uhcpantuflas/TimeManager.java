@@ -23,8 +23,8 @@ public class TimeManager {
 
     public void initTimers() {
         // Shrinking timer
-        final int timeBeforeShrink = 60; // TODO: 15/10/2023 make configurable
-        final int timeBeforeShrinkWarning = (timeBeforeShrink - 5); // TODO: 15/10/2023 change to 5 min
+        final int timeBeforeShrink = 60 * 60 * 3; // TODO: 15/10/2023 make configurable
+        final int timeBeforeShrinkWarning = (timeBeforeShrink - (60 * 5));
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -39,5 +39,21 @@ public class TimeManager {
                 WorldManager.get().shrink();
             }
         }.runTaskLater(plugin, timeBeforeShrink * 20);
+
+        // No PVP timer
+        final int timeBeforeActivatingPVP = 60 * 45; // TODO: 16/10/2023 make configurable
+        final int timeBeforeActivatingPVPWarning = (timeBeforeActivatingPVP - (60 * 5));
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                TitleManager.get().sendTitle(TitleManager.BuiltInTitle.PVP_WARNING, TitleManager.TitlePosition.HOT_BAR);
+            }
+        }.runTaskLater(plugin, timeBeforeActivatingPVPWarning * 20);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                TitleManager.get().sendTitle(TitleManager.BuiltInTitle.PVP, TitleManager.TitlePosition.HOT_BAR);
+            }
+        }.runTaskLater(plugin, timeBeforeActivatingPVP * 20);
     }
 }

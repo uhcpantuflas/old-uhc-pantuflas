@@ -19,6 +19,8 @@ public class TitleManager {
     private final Title startingTitle;
     private final Title shrinkingTitle;
     private final Title shrinkWarningTitle;
+    private final Title pvpTitle;
+    private final Title pvpWarningTitle;
 
     private TitleManager() {
         // Private constructor to enforce singleton pattern
@@ -45,6 +47,20 @@ public class TitleManager {
                 -1,
                 -1
         )); // TODO: 15/10/2023 make configurable
+        pvpTitle = formatAsDanger(new Title(
+                "The PVP is activated!",
+                "",
+                -1,
+                -1,
+                -1
+        )); // TODO: 16/10/2023 make configurable
+        pvpWarningTitle = formatAsWarning(new Title(
+                "The PVP will be activated in 5 min...",
+                "",
+                -1,
+                -1,
+                -1
+        )); // TODO: 16/10/2023 make configurable
     }
 
     /**
@@ -141,6 +157,8 @@ public class TitleManager {
                     case STARTING -> startingTitle;
                     case SHRINKING -> shrinkingTitle;
                     case SHRINK_WARNING -> shrinkWarningTitle;
+                    case PVP -> pvpTitle;
+                    case PVP_WARNING -> pvpWarningTitle;
                 }
         );
     }
@@ -157,6 +175,8 @@ public class TitleManager {
                     case STARTING -> startingTitle;
                     case SHRINKING -> shrinkingTitle;
                     case SHRINK_WARNING -> shrinkWarningTitle;
+                    case PVP -> pvpTitle;
+                    case PVP_WARNING -> pvpWarningTitle;
                 }
         );
     }
@@ -207,6 +227,8 @@ public class TitleManager {
             case JOINING -> joiningTitle;
             case STARTING -> startingTitle;
             case SHRINKING -> shrinkingTitle;
+            case PVP -> pvpTitle;
+            case PVP_WARNING -> pvpWarningTitle;
         }, titlePosition);
     }
 
@@ -216,7 +238,8 @@ public class TitleManager {
     public enum BuiltInTitle {
         JOINING,
         STARTING,
-        SHRINKING, SHRINK_WARNING
+        SHRINKING, SHRINK_WARNING,
+        PVP, PVP_WARNING
     }
 
     public enum TitlePosition {
