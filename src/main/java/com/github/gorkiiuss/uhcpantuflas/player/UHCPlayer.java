@@ -10,6 +10,7 @@ package com.github.gorkiiuss.uhcpantuflas.player;
 public final class UHCPlayer {
 
     private final String name;
+    private boolean immobilized;
 
     /**
      * Constructs a UHCPlayer object with the specified player name.
@@ -20,6 +21,10 @@ public final class UHCPlayer {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     /**
      * Check if the UHCPlayer has a specific name.
      *
@@ -28,5 +33,14 @@ public final class UHCPlayer {
      */
     public boolean hasName(String name) {
         return this.name.equals(name);
+    }
+
+    public boolean isImmobilized() {
+        return immobilized;
+    }
+
+    public void setImmobilized(boolean immobilized) {
+        this.immobilized = immobilized;
+        System.out.println("Player " + name + " " + (immobilized? "can now move": "is immobilized"));
     }
 }

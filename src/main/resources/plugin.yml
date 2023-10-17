@@ -12,3 +12,7 @@ commands:
     description: Creates UHC teams
     usage: Wrong usage, must use like this "/uhc-team <add/show/delete> <team name> if add:(<team member 1> <team member 2> ... <team member n>)"
     aliases: uhc-team
+  uhc-start:
+    description: Starts the UHC Game
+    usage: Wrong usage, must use like this "/uhc-start"
+    aliases: uhc-start

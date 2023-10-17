@@ -3,11 +3,15 @@ package com.github.gorkiiuss.uhcpantuflas;
 import com.github.gorkiiuss.uhcpantuflas.config.ConfigurationManager;
 import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigTabCompleter;
+import com.github.gorkiiuss.uhcpantuflas.gameplay.UHCStartCommandExecutor;
+import com.github.gorkiiuss.uhcpantuflas.player.PlayerInteractListener;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerJoinListener;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerLoginListener;
+import com.github.gorkiiuss.uhcpantuflas.player.PlayerMoveListener;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.UHCTeamCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.teams.UHCTeamTabCompleter;
+import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -50,12 +54,22 @@ public final class UHCPantuflas extends JavaPlugin {
         // Register all listeners
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerLoginListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
+        getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
 
         // Register all commands
         Objects.requireNonNull(getCommand(UHCConfigCommandExecutor.NAME)).setExecutor(new UHCConfigCommandExecutor());
         Objects.requireNonNull(getCommand(UHCConfigCommandExecutor.NAME)).setTabCompleter(new UHCConfigTabCompleter());
+
         Objects.requireNonNull(getCommand(UHCTeamCommandExecutor.NAME)).setExecutor(new UHCTeamCommandExecutor());
         Objects.requireNonNull(getCommand(UHCTeamCommandExecutor.NAME)).setTabCompleter(new UHCTeamTabCompleter());
+
+        Objects.requireNonNull(getCommand(UHCStartCommandExecutor.NAME)).setExecutor(new UHCStartCommandExecutor());
+
+        // Initialization
+        WorldManager.get().init();
+        TimeManager.get().init(this);
 
         System.out.println("Plugin UHC Pantuflas-0.0.0-INITIAL successfully charged");
     }

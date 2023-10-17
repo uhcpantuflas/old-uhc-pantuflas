@@ -8,7 +8,7 @@ package com.github.gorkiiuss.uhcpantuflas.utils.text;
 public enum MinecraftColor {
     WHITE,
     YELLOW,
-    GRAY;
+    GRAY, RED;
 
     @Override
     public String toString() {

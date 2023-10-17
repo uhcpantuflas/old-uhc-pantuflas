@@ -2,6 +2,7 @@ package com.github.gorkiiuss.uhcpantuflas.teams;
 
 import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UHCTeamSizeExceededException;
 import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UnknownUHCTeamException;
+import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
@@ -19,7 +20,7 @@ import java.util.Set;
  */
 public class TeamManager {
     private static TeamManager instance;
-    private final Map<String, UHCTeam> teams = new HashMap<>();
+    private final Map<String, UHCTeam> teams = new HashMap<>(); // TODO: 15/10/2023 when starting delete wrong teams
     private int teamsSize;
     private boolean friendlyFire;
 
@@ -162,7 +163,7 @@ public class TeamManager {
         server.dispatchCommand(
                 server.getConsoleSender(),
                 "team remove " + teamName
-        );
+        ); // TODO: 15/10/2023 doesn't delete well
     }
 
     /**
@@ -176,5 +177,33 @@ public class TeamManager {
 
             }
         }
+    }
+
+    public void tpToInitialPositions() {
+        Server server = Bukkit.getServer();
+        CommandSender sender = server.getConsoleSender();
+        double radius = ((double) WorldManager.get().getDiameter()) / 2.0 - 5;
+        double angle = 2 * Math.PI / teams.size();
+
+
+        int x, z, y;
+        int i = 0;
+        for (UHCTeam team : teams.values()) {
+            x = (int) (radius * Math.cos(angle * ((double) i)));
+            z = (int) (radius * Math.sin(angle * ((double) i)));
+            y = WorldManager.get().getY(x, 50, z); // TODO: 15/10/2023 make y offset configurable
+
+            for (String member : team.getMembers()) {
+                server.dispatchCommand(
+                        sender,
+                        "tp " + member + " " + x + " " + y + " " + z
+                );
+            }
+            i++;
+        }
+    }
+
+    public int count() {
+        return teams.size();
     }
 }

@@ -1,6 +1,9 @@
 package com.github.gorkiiuss.uhcpantuflas.player;
 
+import com.github.gorkiiuss.uhcpantuflas.gameplay.GameState;
+import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
+import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,12 +23,20 @@ public class PlayerJoinListener implements Listener {
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        // Show title
-        Player joinedPlayer = event.getPlayer();
+        if (GameplayManager.get().getGameState() == GameState.BEGINNING) {
+            Player joinedPlayer = event.getPlayer();
 
-        TitleManager.get().sendTitle(
-                joinedPlayer.getName(),
-                TitleManager.BuiltInTitle.JOINING
-        );
+            // Show title
+            TitleManager.get().sendTitle(
+                    joinedPlayer.getName(),
+                    TitleManager.BuiltInTitle.JOINING
+            );
+
+            // Register in PlayerManager
+            PlayerManager.get().registerPlayer(new UHCPlayer(joinedPlayer.getName()));
+
+            //TP to 0, 0
+            joinedPlayer.teleport(WorldManager.get().getOverworld00());
+        }
     }
 }
