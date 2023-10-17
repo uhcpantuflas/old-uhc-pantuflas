@@ -21,6 +21,7 @@ public class TitleManager {
     private final Title shrinkWarningTitle;
     private final Title pvpTitle;
     private final Title pvpWarningTitle;
+    private final Title beginningDeathTitle;
 
     private TitleManager() {
         // Private constructor to enforce singleton pattern
@@ -61,6 +62,13 @@ public class TitleManager {
                 -1,
                 -1
         )); // TODO: 16/10/2023 make configurable
+        beginningDeathTitle = formatAsDanger(new Title(
+                "Pathetic...",
+                "You're dead and we haven't even started playing",
+                20,
+                100,
+                20
+        ));
     }
 
     /**
@@ -158,6 +166,7 @@ public class TitleManager {
                     case SHRINKING -> shrinkingTitle;
                     case SHRINK_WARNING -> shrinkWarningTitle;
                     case PVP -> pvpTitle;
+                    case BEGINNING_DEATH -> beginningDeathTitle;
                     case PVP_WARNING -> pvpWarningTitle;
                 }
         );
@@ -176,6 +185,7 @@ public class TitleManager {
                     case SHRINKING -> shrinkingTitle;
                     case SHRINK_WARNING -> shrinkWarningTitle;
                     case PVP -> pvpTitle;
+                    case BEGINNING_DEATH -> beginningDeathTitle;
                     case PVP_WARNING -> pvpWarningTitle;
                 }
         );
@@ -228,6 +238,7 @@ public class TitleManager {
             case STARTING -> startingTitle;
             case SHRINKING -> shrinkingTitle;
             case PVP -> pvpTitle;
+            case BEGINNING_DEATH -> beginningDeathTitle;
             case PVP_WARNING -> pvpWarningTitle;
         }, titlePosition);
     }
@@ -239,7 +250,7 @@ public class TitleManager {
         JOINING,
         STARTING,
         SHRINKING, SHRINK_WARNING,
-        PVP, PVP_WARNING
+        PVP, BEGINNING_DEATH, PVP_WARNING
     }
 
     public enum TitlePosition {
