@@ -58,4 +58,13 @@ public class TimeManager {
             }
         }.runTaskLater(plugin, timeBeforeActivatingPVP * 20);
     }
+
+    public void executeAFrameLater(Runnable runnable) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                runnable.run();
+            }
+        }.runTaskLater(plugin, 1);
+    }
 }

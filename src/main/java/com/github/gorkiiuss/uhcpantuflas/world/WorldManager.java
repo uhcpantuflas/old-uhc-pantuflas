@@ -3,10 +3,7 @@ package com.github.gorkiiuss.uhcpantuflas.world;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.WorldBorder;
+import org.bukkit.*;
 
 import java.util.List;
 
@@ -22,16 +19,30 @@ public class WorldManager {
         List<World> worlds = Bukkit.getWorlds();
 
         WorldBorder overworldWorldBorder = worlds.get(0).getWorldBorder();
-//        WorldBorder netherWorldBorder = worlds.get(1).getWorldBorder(); todo 15/10/2023 fix nether tiny size
 
         final int initialWorldSize = 100; // TODO: 15/10/2023 make configurable
-//        int initialNetherSize = initialWorldSize / 8;
 
         overworldWorldBorder.setCenter(0, 0);
         overworldWorldBorder.setSize(initialWorldSize);
 
-//        netherWorldBorder.setCenter(0, 0);
-//        netherWorldBorder.setSize(initialNetherSize);
+        worlds.forEach(world -> world.setGameRule(GameRule.NATURAL_REGENERATION, false));
+
+        if (
+                // Creation of spawn platform
+                worlds.get(0).getHighestBlockYAt(0, 0) <= 40 ||
+                worlds.get(0).getBlockAt(getOverworld00().subtract(0, 1, 0)).isLiquid()
+        ) {
+            createPlatform();
+        }
+    }
+
+    private void createPlatform() {
+        World world = Bukkit.getWorlds().get(0);
+        for (int x = 0; x < 25; x++) {
+            for (int z = 0; z < 25; z++) {
+                world.getBlockAt(x - 12, 90, z - 12).setType(Material.GLASS);
+            }
+        }
     }
 
     public Location getOverworld00() {
@@ -76,5 +87,18 @@ public class WorldManager {
 
     public int getY(int x, int yOffset, int z) {
         return Bukkit.getWorlds().get(0).getHighestBlockYAt(x, z) + yOffset;
+    }
+
+    public void wipe() {
+        deletePlatform();
+    }
+
+    private void deletePlatform() {
+        World world = Bukkit.getWorlds().get(0);
+        for (int x = 0; x < 25; x++) {
+            for (int z = 0; z < 25; z++) {
+                world.getBlockAt(x - 12, 90, z - 12).setType(Material.AIR);
+            }
+        }
     }
 }

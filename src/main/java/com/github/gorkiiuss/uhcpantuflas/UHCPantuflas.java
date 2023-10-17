@@ -4,10 +4,7 @@ import com.github.gorkiiuss.uhcpantuflas.config.ConfigurationManager;
 import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.config.UHCConfigTabCompleter;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.UHCStartCommandExecutor;
-import com.github.gorkiiuss.uhcpantuflas.player.PlayerInteractListener;
-import com.github.gorkiiuss.uhcpantuflas.player.PlayerJoinListener;
-import com.github.gorkiiuss.uhcpantuflas.player.PlayerLoginListener;
-import com.github.gorkiiuss.uhcpantuflas.player.PlayerMoveListener;
+import com.github.gorkiiuss.uhcpantuflas.player.*;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.UHCTeamCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.teams.UHCTeamTabCompleter;
@@ -58,6 +55,9 @@ public final class UHCPantuflas extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
         getServer().getPluginManager().registerEvents(new PortalCreateListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
         // Register all commands
         Objects.requireNonNull(getCommand(UHCConfigCommandExecutor.NAME)).setExecutor(new UHCConfigCommandExecutor());
@@ -94,5 +94,6 @@ public final class UHCPantuflas extends JavaPlugin {
 
         // Remove all data from managers
         TeamManager.get().wipe();
+        WorldManager.get().wipe();
     }
 }

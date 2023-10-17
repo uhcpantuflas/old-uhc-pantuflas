@@ -4,6 +4,7 @@ import com.github.gorkiiuss.uhcpantuflas.gameplay.GameState;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
 import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,6 +38,9 @@ public class PlayerJoinListener implements Listener {
 
             //TP to 0, 0
             joinedPlayer.teleport(WorldManager.get().getOverworld00());
+
+            //Set game mode to Adventure
+            joinedPlayer.setGameMode(GameMode.ADVENTURE);
         }
     }
 }

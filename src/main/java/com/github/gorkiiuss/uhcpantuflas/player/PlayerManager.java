@@ -41,6 +41,10 @@ public class PlayerManager {
         players.add(player);
     }
 
+    public void unregisterPlayer(String name) {
+        players.removeIf(player -> player.hasName(name));
+    }
+
     public void setImmobilized(boolean immobilized) {
         players.forEach( player -> player.setImmobilized(immobilized));
 
