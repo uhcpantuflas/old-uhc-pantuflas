@@ -57,6 +57,7 @@ public final class UHCPantuflas extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        getServer().getPluginManager().registerEvents(new PortalCreateListener(), this);
 
         // Register all commands
         Objects.requireNonNull(getCommand(UHCConfigCommandExecutor.NAME)).setExecutor(new UHCConfigCommandExecutor());
@@ -70,6 +71,11 @@ public final class UHCPantuflas extends JavaPlugin {
         // Initialization
         WorldManager.get().init();
         TimeManager.get().init(this);
+
+        getServer().dispatchCommand(
+                getServer().getConsoleSender(),
+                "uhc-team add team1 gorkius_pD"
+        );
 
         System.out.println("Plugin UHC Pantuflas-0.0.0-INITIAL successfully charged");
     }
