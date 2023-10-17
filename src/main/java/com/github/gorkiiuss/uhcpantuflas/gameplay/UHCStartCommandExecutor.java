@@ -18,12 +18,21 @@ public class UHCStartCommandExecutor implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (GameplayManager.get().getGameState() != GameState.BEGINNING) return false; // TODO: 14/10/2023 handle exception
 
+        // Delete bad teams
+        TeamManager.get().deleteBadTeams();
+
+        if (TeamManager.get().count() < 1) // TODO: 18/10/2023 change to 2
+            return false;
+
         // Immobilize players
         PlayerManager.get().setImmobilized(true);
 
         // Set world size
         WorldManager.get().updateDiameter();
         WorldManager.get().setWorldBorder(WorldManager.get().getDiameter(), 0);
+
+        // Delete platform
+        WorldManager.get().deletePlatform();
 
         // TP players
         TeamManager.get().tpToInitialPositions();

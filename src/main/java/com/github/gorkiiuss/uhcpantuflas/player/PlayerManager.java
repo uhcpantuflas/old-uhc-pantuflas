@@ -104,4 +104,8 @@ public class PlayerManager {
                 "gamemode " + gameMode.name().toLowerCase() + " @a"
         );
     }
+
+    public boolean isPlayerRegistered(String name) {
+        return players.stream().anyMatch(player -> player.hasName(name));
+    }
 }

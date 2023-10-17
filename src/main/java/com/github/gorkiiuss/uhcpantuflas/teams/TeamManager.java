@@ -1,5 +1,6 @@
 package com.github.gorkiiuss.uhcpantuflas.teams;
 
+import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UHCTeamSizeExceededException;
 import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UnknownUHCTeamException;
 import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
@@ -7,9 +8,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The TeamManager class is responsible for managing teams in the plugin.
@@ -20,7 +22,7 @@ import java.util.Set;
  */
 public class TeamManager {
     private static TeamManager instance;
-    private final Map<String, UHCTeam> teams = new HashMap<>(); // TODO: 15/10/2023 when starting delete wrong teams
+    private final Map<String, UHCTeam> teams = new ConcurrentHashMap<>();
     private int teamsSize;
     private boolean friendlyFire;
 
@@ -205,5 +207,18 @@ public class TeamManager {
 
     public int count() {
         return teams.size();
+    }
+
+    public void deleteBadTeams() {
+        teams.keySet().forEach(teamName -> {
+            UHCTeam team = teams.get(teamName);
+            if (Arrays.stream(team.getMembers()).noneMatch(PlayerManager.get()::isPlayerRegistered)) {
+                try {
+                    deleteTeam(teamName);
+                } catch (UnknownUHCTeamException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 }
