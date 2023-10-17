@@ -10,6 +10,7 @@ public class GameplayManager {
     private static GameplayManager instance;
     private UHCGameMode gameMode;
     private GameState gameState = GameState.BEGINNING;
+    private boolean pvp;
 
     private GameplayManager() {
         // Private constructor to enforce singleton pattern
@@ -53,5 +54,14 @@ public class GameplayManager {
 
     public double getDensity() {
         return 1e-5; // TODO: 15/10/2023 make configurable
+    }
+
+    public void setPVP(boolean pvp) {
+        this.pvp = pvp;
+        System.out.println("PVP is now " + (pvp? "activated": "deactivated"));
+    }
+
+    public boolean isPvp() {
+        return pvp;
     }
 }

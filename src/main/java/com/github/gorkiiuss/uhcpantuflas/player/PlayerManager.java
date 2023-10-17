@@ -1,6 +1,7 @@
 package com.github.gorkiiuss.uhcpantuflas.player;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
@@ -90,5 +91,13 @@ public class PlayerManager {
 
     public int count() {
         return players.size();
+    }
+
+    public void changeGameMode(GameMode gameMode) {
+        Server server = Bukkit.getServer();
+        server.dispatchCommand(
+                server.getConsoleSender(),
+                "gamemode " + gameMode.name().toLowerCase() + " @a"
+        );
     }
 }

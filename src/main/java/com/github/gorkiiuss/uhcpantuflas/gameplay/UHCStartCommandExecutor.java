@@ -5,6 +5,7 @@ import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
 import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -38,6 +39,12 @@ public class UHCStartCommandExecutor implements CommandExecutor {
 
         // Give slow-falling
         PlayerManager.get().slowFallingAll();
+
+        // Change game mode
+        PlayerManager.get().changeGameMode(GameMode.SURVIVAL);
+
+        // Deactivate PVP
+        GameplayManager.get().setPVP(false);
 
         // Set timers
         TimeManager.get().initTimers();

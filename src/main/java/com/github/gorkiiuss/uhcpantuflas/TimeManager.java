@@ -1,5 +1,6 @@
 package com.github.gorkiiuss.uhcpantuflas;
 
+import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
 import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
 import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -53,6 +54,7 @@ public class TimeManager {
             @Override
             public void run() {
                 TitleManager.get().sendTitle(TitleManager.BuiltInTitle.PVP, TitleManager.TitlePosition.HOT_BAR);
+                GameplayManager.get().setPVP(true);
             }
         }.runTaskLater(plugin, timeBeforeActivatingPVP * 20);
     }

@@ -21,6 +21,10 @@ public final class UHCPlayer {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     /**
      * Check if the UHCPlayer has a specific name.
      *
@@ -31,21 +35,8 @@ public final class UHCPlayer {
         return this.name.equals(name);
     }
 
-    public void immobilize() {
-        immobilized = true;
-        System.out.println("Player " + name + " has been immobilized");
-    }
-
     public boolean isImmobilized() {
         return immobilized;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void reset() {
-
     }
 
     public void setImmobilized(boolean immobilized) {
