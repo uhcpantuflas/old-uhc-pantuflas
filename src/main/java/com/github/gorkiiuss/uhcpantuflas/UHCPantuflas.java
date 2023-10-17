@@ -72,11 +72,6 @@ public final class UHCPantuflas extends JavaPlugin {
         WorldManager.get().init();
         TimeManager.get().init(this);
 
-        getServer().dispatchCommand(
-                getServer().getConsoleSender(),
-                "uhc-team add team1 gorkius_pD"
-        );
-
         System.out.println("Plugin UHC Pantuflas-0.0.0-INITIAL successfully charged");
     }
 

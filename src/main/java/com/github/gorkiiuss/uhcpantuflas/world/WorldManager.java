@@ -93,7 +93,7 @@ public class WorldManager {
         deletePlatform();
     }
 
-    private void deletePlatform() {
+    public void deletePlatform() {
         World world = Bukkit.getWorlds().get(0);
         for (int x = 0; x < 25; x++) {
             for (int z = 0; z < 25; z++) {
