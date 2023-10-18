@@ -31,6 +31,9 @@ public class UHCStartCommandExecutor implements CommandExecutor {
         WorldManager.get().updateDiameter();
         WorldManager.get().setWorldBorder(WorldManager.get().getDiameter(), 0);
 
+        // Pre-generate chunks
+        WorldManager.get().preGenerateChunks();
+
         // Delete platform
         WorldManager.get().deletePlatform();
 
@@ -54,6 +57,9 @@ public class UHCStartCommandExecutor implements CommandExecutor {
 
         // Deactivate PVP
         GameplayManager.get().setPVP(false);
+
+        // Activate daylight cycle
+        WorldManager.get().setDaylightCycle(true);
 
         // Set timers
         TimeManager.get().initTimers();
