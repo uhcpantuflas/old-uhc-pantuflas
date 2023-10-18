@@ -19,9 +19,9 @@ public class UHCStartCommandExecutor implements CommandExecutor {
         if (GameplayManager.get().getGameState() != GameState.BEGINNING) return false; // TODO: 14/10/2023 handle exception
 
         // Delete bad teams
-        TeamManager.get().deleteBadTeams();
+        TeamManager.get().updateTeams();
 
-        if (TeamManager.get().count() < 1) // TODO: 18/10/2023 change to 2
+        if (TeamManager.get().count() < 2)
             return false;
 
         // Immobilize players
@@ -35,7 +35,7 @@ public class UHCStartCommandExecutor implements CommandExecutor {
         WorldManager.get().preGenerateChunks();
 
         // Delete platform
-        WorldManager.get().deletePlatform();
+        WorldManager.get().deleteSpawnPlatform();
 
         // TP players
         TeamManager.get().tpToInitialPositions();

@@ -1,5 +1,7 @@
 package com.github.gorkiiuss.uhcpantuflas.teams;
 
+import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
+import com.github.gorkiiuss.uhcpantuflas.player.UHCPlayer;
 import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UHCTeamSizeExceededException;
 
 import java.util.Arrays;
@@ -65,5 +67,14 @@ public final class UHCTeam {
      */
     public String[] getMembers() {
         return members.toArray(new String[0]);
+    }
+
+    public UHCPlayer deleteMember(String memberName) {
+        members.remove(memberName);
+        return PlayerManager.get().getPlayer(memberName);
+    }
+
+    public boolean isEmpty() {
+        return members.isEmpty();
     }
 }

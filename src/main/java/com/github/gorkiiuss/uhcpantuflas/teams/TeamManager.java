@@ -1,6 +1,7 @@
 package com.github.gorkiiuss.uhcpantuflas.teams;
 
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
+import com.github.gorkiiuss.uhcpantuflas.player.UHCPlayer;
 import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UHCTeamSizeExceededException;
 import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UnknownUHCTeamException;
 import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
@@ -8,9 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -25,6 +24,7 @@ public class TeamManager {
     private final Map<String, UHCTeam> teams = new ConcurrentHashMap<>();
     private int teamsSize;
     private boolean friendlyFire;
+    private String winnerName;
 
     private TeamManager() {
         // Private constructor to enforce singleton pattern
@@ -209,16 +209,43 @@ public class TeamManager {
         return teams.size();
     }
 
-    public void deleteBadTeams() {
-        teams.keySet().forEach(teamName -> {
+    public List<String> updateTeams() {
+        List<String> deletedTeamNames = new ArrayList<>();
+        for (String teamName : teams.keySet()) {
             UHCTeam team = teams.get(teamName);
-            if (Arrays.stream(team.getMembers()).noneMatch(PlayerManager.get()::isPlayerRegistered)) {
+            Arrays.stream(team.getMembers())
+                    .filter(member -> !(PlayerManager.get().isPlayerRegistered(member)))
+                    .forEach(team::deleteMember);
+            if (team.isEmpty()) {
                 try {
                     deleteTeam(teamName);
+                    deletedTeamNames.add(teamName);
                 } catch (UnknownUHCTeamException e) {
                     throw new RuntimeException(e);
                 }
             }
-        });
+        }
+
+        return deletedTeamNames;
+    }
+
+    public UHCPlayer deleteMemberFromTeam(String memberName) {
+        UHCPlayer deletedMember = null;
+        for (UHCTeam t : teams.values()) {
+            if (t.hasMember(memberName)) {
+                deletedMember = t.deleteMember(memberName);
+                break;
+            }
+        }
+
+        return deletedMember;
+    }
+
+    public void setWinner() {
+        this.winnerName = teams.keySet().stream().findFirst().orElse(null);
+    }
+
+    public String getWinnerName() {
+        return winnerName;
     }
 }

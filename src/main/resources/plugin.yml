@@ -17,3 +17,11 @@ commands:
     description: Starts the UHC Game
     usage: Wrong usage, must use like this "/uhc-start"
     aliases: uhc-start
+  uhc-spectate:
+    description: Set spectator mode
+    usage: Wrong usage, must use like this "/uhc-spectate"
+    aliases: uhc-spectate
+  uhc-lobby:
+    description: Tps spectator to lobby
+    usage: Wrong usage, mus use like this "/uhc-lobby"
+    aliases: uhc-lobby
