@@ -26,6 +26,11 @@ public class WorldManager {
         overworldWorldBorder.setSize(initialWorldSize);
 
         worlds.forEach(world -> world.setGameRule(GameRule.NATURAL_REGENERATION, false));
+        worlds.forEach(world -> world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false));
+        Bukkit.getServer().dispatchCommand(
+                Bukkit.getServer().getConsoleSender(),
+                "time set 0"
+        );
 
         if (
                 // Creation of spawn platform
