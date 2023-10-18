@@ -69,6 +69,10 @@ public final class UHCPantuflas extends JavaPlugin {
 
         Objects.requireNonNull(getCommand(UHCStartCommandExecutor.NAME)).setExecutor(new UHCStartCommandExecutor());
 
+        Objects.requireNonNull(getCommand(UHCSpectateCommandExecutor.NAME)).setExecutor(new UHCSpectateCommandExecutor());
+
+        Objects.requireNonNull(getCommand(UHCLobbyCommandExecutor.NAME)).setExecutor(new UHCLobbyCommandExecutor());
+
         // Initialization
         WorldManager.get().init();
         TimeManager.get().init(this);

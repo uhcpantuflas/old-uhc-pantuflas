@@ -28,25 +28,28 @@ public class WorldManager {
 
         worlds.forEach(world -> world.setGameRule(GameRule.NATURAL_REGENERATION, false));
         setDaylightCycle(false);
-        Bukkit.getServer().dispatchCommand(
-                Bukkit.getServer().getConsoleSender(),
-                "time set 0"
-        );
+        worlds.get(0).setTime(0);
 
         if (
                 // Creation of spawn platform
                 worlds.get(0).getHighestBlockYAt(0, 0) <= 40 ||
                 worlds.get(0).getBlockAt(getOverworld00().subtract(0, 1, 0)).isLiquid()
         ) {
-            createPlatform();
+            createPlatform(0, 0, 90, 0);
         }
+
+        createLobby();
     }
 
-    private void createPlatform() {
-        World world = Bukkit.getWorlds().get(0);
+    private void createLobby() {
+        createPlatform(2, 500, 100, 500);
+    }
+
+    private void createPlatform(int worldIdx, int x0, int y, int z0) {
+        World world = Bukkit.getWorlds().get(worldIdx);
         for (int x = 0; x < 25; x++) {
             for (int z = 0; z < 25; z++) {
-                world.getBlockAt(x - 12, 90, z - 12).setType(Material.GLASS);
+                world.getBlockAt(x - 12 + x0, y, z - 12 + z0).setType(Material.GLASS);
             }
         }
     }
@@ -96,10 +99,10 @@ public class WorldManager {
     }
 
     public void wipe() {
-        deletePlatform();
+        deleteSpawnPlatform();
     }
 
-    public void deletePlatform() {
+    public void deleteSpawnPlatform() {
         World world = Bukkit.getWorlds().get(0);
         for (int x = 0; x < 25; x++) {
             for (int z = 0; z < 25; z++) {

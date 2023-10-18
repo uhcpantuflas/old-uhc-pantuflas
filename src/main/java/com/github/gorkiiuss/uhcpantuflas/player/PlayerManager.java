@@ -1,8 +1,6 @@
 package com.github.gorkiiuss.uhcpantuflas.player;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Server;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -17,6 +15,7 @@ import java.util.ArrayList;
 public class PlayerManager {
     private static PlayerManager instance;
     private final ArrayList<UHCPlayer> players = new ArrayList<>();
+    private final ArrayList<UHCPlayer> deathList = new ArrayList<>();
 
     private PlayerManager() {
         // Private constructor to enforce singleton pattern
@@ -107,5 +106,29 @@ public class PlayerManager {
 
     public boolean isPlayerRegistered(String name) {
         return players.stream().anyMatch(player -> player.hasName(name));
+    }
+
+    public void playSound(Sound sound, float volume, float pitch) {
+        Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), sound, volume, pitch));
+    }
+
+    public void died(UHCPlayer death) {
+        deathList.add(death);
+    }
+
+    public UHCPlayer getPlayer(String memberName) {
+        return players.stream().filter(player -> player.hasName(memberName)).findFirst().orElse(null);
+    }
+
+    public boolean isPlayerDeath(String name) {
+        return deathList.stream().anyMatch(player -> player.hasName(name));
+    }
+
+    public void tpToLobby() {
+        Bukkit.getOnlinePlayers().forEach(player -> player.teleport(new Location(Bukkit.getWorlds().get(2), 500, 101, 500)));
+    }
+
+    public void setGameMode(GameMode gameMode) {
+        Bukkit.getOnlinePlayers().forEach(player -> player.setGameMode(gameMode));
     }
 }

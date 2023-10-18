@@ -22,6 +22,10 @@ public class TitleManager {
     private final Title pvpTitle;
     private final Title pvpWarningTitle;
     private final Title beginningDeathTitle;
+    private final Title playerDeathArgTitle;
+    private final Title teamDeathArgTitle;
+    private final Title spectatorTitle;
+    private final Title winningArgTitle;
 
     private TitleManager() {
         // Private constructor to enforce singleton pattern
@@ -69,6 +73,34 @@ public class TitleManager {
                 100,
                 20
         ));
+        playerDeathArgTitle = new Title(
+                "Player $1 died",
+                "",
+                -1,
+                -1,
+                -1
+        );
+        teamDeathArgTitle = new Title(
+                "Team $1 disappeared",
+                "",
+                -1,
+                -1,
+                -1
+        );
+        spectatorTitle = formatAsWarning(new Title(
+                "You are spectating",
+                "Press 1 for tp-ing to players",
+                20,
+                100,
+                20
+        ));
+        winningArgTitle = new Title(
+                "Team $1 won!",
+                "Congratulations",
+                20,
+                100,
+                20
+        );
     }
 
     /**
@@ -167,6 +199,7 @@ public class TitleManager {
                     case SHRINK_WARNING -> shrinkWarningTitle;
                     case PVP -> pvpTitle;
                     case BEGINNING_DEATH -> beginningDeathTitle;
+                    case SPECTATOR -> spectatorTitle;
                     case PVP_WARNING -> pvpWarningTitle;
                 }
         );
@@ -186,6 +219,7 @@ public class TitleManager {
                     case SHRINK_WARNING -> shrinkWarningTitle;
                     case PVP -> pvpTitle;
                     case BEGINNING_DEATH -> beginningDeathTitle;
+                    case SPECTATOR -> spectatorTitle;
                     case PVP_WARNING -> pvpWarningTitle;
                 }
         );
@@ -239,8 +273,61 @@ public class TitleManager {
             case SHRINKING -> shrinkingTitle;
             case PVP -> pvpTitle;
             case BEGINNING_DEATH -> beginningDeathTitle;
+            case SPECTATOR -> spectatorTitle;
             case PVP_WARNING -> pvpWarningTitle;
         }, titlePosition);
+    }
+
+    public void sendTitle(BuiltInArgTitle builtInArgTitle, TitlePosition position, String... args) {
+        sendTitle(switch (builtInArgTitle) {
+            case TEAM_DEATH -> getTeamDeathTitle(args);
+            case WINNING -> getWinningTitle(args);
+            case PLAYER_DEATH -> getPlayerDeathTitle(args);
+        }, position);
+    }
+
+    private Title getWinningTitle(String... args) {
+        return formatAsWinning(winningArgTitle, args);
+    }
+
+    private Title formatAsWinning(Title title, String... args) {
+        String titleWithoutFormat = title.getTitle();
+        for (int i = 0; i < args.length; i++) {
+            titleWithoutFormat = titleWithoutFormat.replace("$" + (i + 1), args[i]);
+        }
+        String winningTitle = new MinecraftTextBuilder()
+                .addText(titleWithoutFormat)
+                .color(MinecraftColor.YELLOW)
+                .bold()
+                .build();
+        String winningSubtitle = new MinecraftTextBuilder()
+                .addText(title.getSubtitle())
+                .color(MinecraftColor.YELLOW)
+                .bold()
+                .build();
+
+        return new Title(winningTitle, winningSubtitle, title.getFadeIn(), title.getStay(), title.getFadeOut());
+    }
+
+    private Title getTeamDeathTitle(String... args) {
+        return formatAsDeath(teamDeathArgTitle, args);
+    }
+
+    private Title getPlayerDeathTitle(String... args) {
+        return formatAsDeath(playerDeathArgTitle, args);
+    }
+
+    private Title formatAsDeath(Title title, String[] args) {
+        String textWithoutFormat = title.getTitle();
+        for (int i = 0; i < args.length; i++) {
+            textWithoutFormat = textWithoutFormat.replace("$" + (i + 1), args[i]);
+        }
+        String deathTitle = new MinecraftTextBuilder()
+                .addText(textWithoutFormat)
+                .bold()
+                .color(MinecraftColor.RED)
+                .build();
+        return new Title(deathTitle, title.getSubtitle(), title.getFadeIn(), title.getStay(), title.getFadeOut());
     }
 
     /**
@@ -250,11 +337,15 @@ public class TitleManager {
         JOINING,
         STARTING,
         SHRINKING, SHRINK_WARNING,
-        PVP, BEGINNING_DEATH, PVP_WARNING
+        PVP, BEGINNING_DEATH, SPECTATOR, PVP_WARNING
     }
 
     public enum TitlePosition {
         SCREEN,
         HOT_BAR
+    }
+
+    public enum BuiltInArgTitle {
+        TEAM_DEATH, WINNING, PLAYER_DEATH
     }
 }
