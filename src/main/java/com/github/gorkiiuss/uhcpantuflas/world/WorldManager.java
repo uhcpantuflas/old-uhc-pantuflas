@@ -4,6 +4,7 @@ import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
 import org.bukkit.*;
+import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class WorldManager {
         overworldWorldBorder.setSize(initialWorldSize);
 
         worlds.forEach(world -> world.setGameRule(GameRule.NATURAL_REGENERATION, false));
-        worlds.forEach(world -> world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false));
+        setDaylightCycle(false);
         Bukkit.getServer().dispatchCommand(
                 Bukkit.getServer().getConsoleSender(),
                 "time set 0"
@@ -105,5 +106,29 @@ public class WorldManager {
                 world.getBlockAt(x - 12, 90, z - 12).setType(Material.AIR);
             }
         }
+    }
+
+    public void setDaylightCycle(boolean daylightCycle) {
+        Bukkit.getWorlds().forEach(world -> world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, daylightCycle));
+    }
+
+    public void preGenerateChunks() {
+        Server server = Bukkit.getServer();
+        CommandSender sender = server.getConsoleSender();
+        System.out.println("Selecting chunky world");
+        server.dispatchCommand(
+                sender,
+                "chunky world " + Bukkit.getWorlds().get(0).getName()
+        );
+        System.out.println("Selecting worldborder chunky");
+        server.dispatchCommand(
+                sender,
+                "chunky worldborder"
+        );
+        System.out.println("Starting chunky");
+        server.dispatchCommand(
+                sender,
+                "chunky start"
+        );
     }
 }
