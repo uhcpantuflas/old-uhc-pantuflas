@@ -27,7 +27,7 @@ public class UHCSpectateCommandExecutor implements CommandExecutor {
 
         playerSender.setGameMode(GameMode.SPECTATOR);
         playerSender.teleport(WorldManager.get().getOverworld00());
-        TimeManager.get().executeAFrameLater(() -> TitleManager.get().sendTitle(TitleManager.BuiltInTitle.SPECTATOR, TitleManager.TitlePosition.SCREEN));
+        TimeManager.get().executeAFrameLater(() -> TitleManager.get().sendTitle(playerSender.getName(), TitleManager.BuiltInTitle.SPECTATOR, TitleManager.TitlePosition.SCREEN));
 
         return true;
     }

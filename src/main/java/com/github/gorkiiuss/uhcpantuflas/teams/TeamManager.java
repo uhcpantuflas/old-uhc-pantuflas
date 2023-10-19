@@ -4,6 +4,8 @@ import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import com.github.gorkiiuss.uhcpantuflas.player.UHCPlayer;
 import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UHCTeamSizeExceededException;
 import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UnknownUHCTeamException;
+import com.github.gorkiiuss.uhcpantuflas.utils.text.MinecraftColor;
+import com.github.gorkiiuss.uhcpantuflas.utils.text.MinecraftTextBuilder;
 import com.github.gorkiiuss.uhcpantuflas.world.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
@@ -99,6 +101,10 @@ public class TeamManager {
                 sender,
                 "team modify " + teamName + " friendlyFire " + friendlyFire
         );
+        server.dispatchCommand(
+                sender,
+                "team modify " + teamName + " prefix " + new MinecraftTextBuilder().addText("[" + teamName + "] ").color(MinecraftColor.RED).bold().build()
+        );
     }
 
     /**
@@ -193,7 +199,7 @@ public class TeamManager {
         for (UHCTeam team : teams.values()) {
             x = (int) (radius * Math.cos(angle * ((double) i)));
             z = (int) (radius * Math.sin(angle * ((double) i)));
-            y = WorldManager.get().getY(x, 50, z); // TODO: 15/10/2023 make y offset configurable
+            y = WorldManager.get().getY(x, 70, z); // TODO: 15/10/2023 make y offset configurable
 
             for (String member : team.getMembers()) {
                 server.dispatchCommand(

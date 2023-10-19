@@ -330,6 +330,30 @@ public class TitleManager {
         return new Title(deathTitle, title.getSubtitle(), title.getFadeIn(), title.getStay(), title.getFadeOut());
     }
 
+    public void sendTitle(String name, Title title, TitlePosition position) {
+        if (position == TitlePosition.SCREEN) {
+            sendTitle(name, title);
+        } else {
+            Bukkit.getServer().dispatchCommand(
+                    Bukkit.getServer().getConsoleSender(),
+                    "title " + name + " actionbar " + title.getTitle()
+            );
+        }
+    }
+
+    public void sendTitle(String name, BuiltInTitle builtInTitle, TitlePosition titlePosition) {
+        sendTitle(name, switch (builtInTitle) {
+            case JOINING -> joiningTitle;
+            case STARTING -> startingTitle;
+            case SHRINKING -> shrinkingTitle;
+            case SHRINK_WARNING -> shrinkWarningTitle;
+            case PVP -> pvpTitle;
+            case BEGINNING_DEATH -> beginningDeathTitle;
+            case SPECTATOR -> spectatorTitle;
+            case PVP_WARNING -> pvpWarningTitle;
+        }, titlePosition);
+    }
+
     /**
      * An enum containing predefined built-in titles.
      */
