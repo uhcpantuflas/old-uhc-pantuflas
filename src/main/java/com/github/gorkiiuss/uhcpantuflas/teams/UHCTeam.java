@@ -1,5 +1,6 @@
 package com.github.gorkiiuss.uhcpantuflas.teams;
 
+import com.github.gorkiiuss.uhcpantuflas.UHCBanner;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import com.github.gorkiiuss.uhcpantuflas.player.UHCPlayer;
 import com.github.gorkiiuss.uhcpantuflas.teams.exceptions.UHCTeamSizeExceededException;
@@ -18,13 +19,14 @@ import java.util.Set;
  */
 public final class UHCTeam {
     private final Set<String> members = new HashSet<>();
+    private final UHCBanner banner;
 
     /**
      * Constructs a new UHCTeam instance.
      * This constructor initializes an empty team.
      */
-    public UHCTeam() {
-
+    public UHCTeam(UHCBanner banner) {
+        this.banner = banner;
     }
 
     /**
@@ -76,5 +78,9 @@ public final class UHCTeam {
 
     public boolean isEmpty() {
         return members.isEmpty();
+    }
+
+    public UHCBanner getBanner() {
+        return banner;
     }
 }

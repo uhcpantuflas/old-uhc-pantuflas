@@ -53,7 +53,7 @@ public class GameplayManager {
     }
 
     public double getDensity() {
-        return 5e-6; // TODO: 15/10/2023 make configurable
+        return 1e-6; // TODO: 15/10/2023 make configurable
     }
 
     public void setPVP(boolean pvp) {

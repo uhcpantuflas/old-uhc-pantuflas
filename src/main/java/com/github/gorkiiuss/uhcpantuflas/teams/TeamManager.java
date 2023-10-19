@@ -89,7 +89,7 @@ public class TeamManager {
      * @param teamName The name of the new team.
      */
     public void createTeam(String teamName) {
-        this.teams.put(teamName, new UHCTeam());
+        this.teams.put(teamName, new UHCTeam(BannerManager.get().getBanner(teams.size())));
 
         Server server = Bukkit.getServer();
         CommandSender sender = server.getConsoleSender();
@@ -253,5 +253,9 @@ public class TeamManager {
 
     public String getWinnerName() {
         return winnerName;
+    }
+
+    public UHCTeam getTeam(String name) {
+        return teams.values().stream().filter(team -> team.hasMember(name)).findFirst().orElse(null);
     }
 }
