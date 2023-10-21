@@ -10,13 +10,11 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 
-import java.util.Objects;
-
 public class PrepareItemCraftListener implements Listener {
     @EventHandler
     public void onPrepareItemCraft(PrepareItemCraftEvent event) {
-        ItemStack result;
-        if ((Objects.requireNonNull(result = event.getInventory().getResult())).getType() == Material.SHIELD) {
+        ItemStack result = event.getInventory().getResult();
+        if (result != null && result.getType() == Material.SHIELD) {
             BlockStateMeta meta = (BlockStateMeta) result.getItemMeta();
             assert meta != null;
             Banner banner = (Banner) meta.getBlockState();

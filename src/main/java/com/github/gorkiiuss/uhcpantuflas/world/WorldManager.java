@@ -1,11 +1,27 @@
 package com.github.gorkiiuss.uhcpantuflas.world;
 
+import com.github.gorkiiuss.uhcpantuflas.UHCPantuflas;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.WorldEditException;
+import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.extent.clipboard.Clipboard;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
+import com.sk89q.worldedit.function.operation.Operation;
+import com.sk89q.worldedit.function.operation.Operations;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.session.ClipboardHolder;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class WorldManager {
@@ -16,7 +32,7 @@ public class WorldManager {
 
     }
 
-    public void init() {
+    public void init(UHCPantuflas plugin) {
         List<World> worlds = Bukkit.getWorlds();
 
         WorldBorder overworldWorldBorder = worlds.get(0).getWorldBorder();
@@ -38,11 +54,23 @@ public class WorldManager {
             createPlatform(0, 0, 90, 0);
         }
 
-        createLobby();
-    }
+        // Create lobby
+        plugin.getServer().getWorlds().get(2).setSpawnFlags(false, false);
+        File lobbyFile = new File(plugin.getDataFolder() + File.separator + "/schematics/Lobby_UHC_Pantuflas.schem");
+        ClipboardFormat format = ClipboardFormats.findByFile(lobbyFile);
+        try {
+            assert format != null;
+            ClipboardReader reader = format.getReader(new FileInputStream(lobbyFile));
+            Clipboard clipboard = reader.read();
+            BukkitWorld world = new BukkitWorld(Bukkit.getWorlds().get(2));
+            EditSession session = WorldEdit.getInstance().newEditSessionBuilder().world(world).build();
+            Operation operation = new ClipboardHolder(clipboard).createPaste(session).to(BlockVector3.at(500, 100, 500)).ignoreAirBlocks(true).build();
+            Operations.complete(operation);
+            session.close();
 
-    private void createLobby() {
-        createPlatform(2, 500, 100, 500);
+        } catch (IOException | WorldEditException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void createPlatform(int worldIdx, int x0, int y, int z0) {
