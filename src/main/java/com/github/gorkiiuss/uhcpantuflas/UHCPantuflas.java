@@ -75,7 +75,7 @@ public final class UHCPantuflas extends JavaPlugin {
         Objects.requireNonNull(getCommand(UHCLobbyCommandExecutor.NAME)).setExecutor(new UHCLobbyCommandExecutor());
 
         // Initialization
-        WorldManager.get().init();
+        WorldManager.get().init(this);
         TimeManager.get().init(this);
 
         System.out.println("Plugin UHC Pantuflas-0.0.0-INITIAL successfully charged");

@@ -2,21 +2,24 @@ name: uhc-pantuflas
 version: '${project.version}'
 main: com.github.gorkiiuss.uhcpantuflas.UHCPantuflas
 api-version: '1.20'
-depend: [Chunky]
+depend: [Chunky, WorldEdit]
 
 commands:
   uhc-config:
     description: Configure UHC Pantuflas settings
     usage: Wrong usage, must use like this "/uhc-config <section> <option> <value>"
     aliases: uhc-config
+    permission: bukkit.command.op
   uhc-team:
     description: Creates UHC teams
     usage: Wrong usage, must use like this "/uhc-team <add/show/delete> <team name> if add:(<team member 1> <team member 2> ... <team member n>)"
     aliases: uhc-team
+    permission: bukkit.command.op
   uhc-start:
     description: Starts the UHC Game
     usage: Wrong usage, must use like this "/uhc-start"
     aliases: uhc-start
+    permission: bukkit.command.op
   uhc-spectate:
     description: Set spectator mode
     usage: Wrong usage, must use like this "/uhc-spectate"

@@ -125,7 +125,7 @@ public class PlayerManager {
     }
 
     public void tpToLobby() {
-        Bukkit.getOnlinePlayers().forEach(player -> player.teleport(new Location(Bukkit.getWorlds().get(2), 500, 101, 500)));
+        Bukkit.getOnlinePlayers().forEach(player -> player.teleport(new Location(Bukkit.getWorlds().get(2), 515, 101, 597)));
     }
 
     public void setGameMode(GameMode gameMode) {

@@ -14,7 +14,7 @@ public class PlayerRespawnListener implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         if (event.getPlayer().getWorld().getEnvironment() == World.Environment.THE_END) {
-            event.setRespawnLocation(new Location(Bukkit.getWorlds().get(2), 500, 101, 500));
+            event.setRespawnLocation(new Location(Bukkit.getWorlds().get(2), 515, 101, 597));
         }
 
         if (GameplayManager.get().getGameState() == GameState.BEGINNING) {

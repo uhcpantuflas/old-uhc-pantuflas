@@ -4,6 +4,7 @@ import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,8 +27,9 @@ public class UHCLobbyCommandExecutor implements CommandExecutor {
             return false; // TODO: 18/10/2023 handle
 
         playerSender.setGameMode(GameMode.ADVENTURE);
-        playerSender.teleport(new Location(Bukkit.getWorlds().get(2), 500, 101, 500));
+        playerSender.teleport(new Location(Bukkit.getWorlds().get(2), 515, 101, 597));
 
+        playerSender.playSound(playerSender.getLocation(), Sound.BLOCK_BELL_RESONATE, 1, 1);
         return true;
     }
 }
