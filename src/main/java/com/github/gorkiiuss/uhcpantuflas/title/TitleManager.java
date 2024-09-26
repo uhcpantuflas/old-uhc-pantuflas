@@ -26,6 +26,7 @@ public class TitleManager {
     private final Title teamDeathArgTitle;
     private final Title spectatorTitle;
     private final Title winningArgTitle;
+    private final Title chunkGenerationTitle;
 
     private TitleManager() {
         // Private constructor to enforce singleton pattern
@@ -101,6 +102,13 @@ public class TitleManager {
                 100,
                 20
         );
+        chunkGenerationTitle = formatAsWarning(new Title(
+                "Creating world...",
+                "Waiting till pre-generation finishes",
+                20,
+                100,
+                20
+        ));
     }
 
     /**
@@ -200,6 +208,7 @@ public class TitleManager {
                     case PVP -> pvpTitle;
                     case BEGINNING_DEATH -> beginningDeathTitle;
                     case SPECTATOR -> spectatorTitle;
+                    case CHUNK_GENERATION -> chunkGenerationTitle;
                     case PVP_WARNING -> pvpWarningTitle;
                 }
         );
@@ -220,6 +229,7 @@ public class TitleManager {
                     case PVP -> pvpTitle;
                     case BEGINNING_DEATH -> beginningDeathTitle;
                     case SPECTATOR -> spectatorTitle;
+                    case CHUNK_GENERATION -> chunkGenerationTitle;
                     case PVP_WARNING -> pvpWarningTitle;
                 }
         );
@@ -274,6 +284,7 @@ public class TitleManager {
             case PVP -> pvpTitle;
             case BEGINNING_DEATH -> beginningDeathTitle;
             case SPECTATOR -> spectatorTitle;
+            case CHUNK_GENERATION -> chunkGenerationTitle;
             case PVP_WARNING -> pvpWarningTitle;
         }, titlePosition);
     }
@@ -350,6 +361,7 @@ public class TitleManager {
             case PVP -> pvpTitle;
             case BEGINNING_DEATH -> beginningDeathTitle;
             case SPECTATOR -> spectatorTitle;
+            case CHUNK_GENERATION -> chunkGenerationTitle;
             case PVP_WARNING -> pvpWarningTitle;
         }, titlePosition);
     }
@@ -361,7 +373,7 @@ public class TitleManager {
         JOINING,
         STARTING,
         SHRINKING, SHRINK_WARNING,
-        PVP, BEGINNING_DEATH, SPECTATOR, PVP_WARNING
+        PVP, BEGINNING_DEATH, SPECTATOR, CHUNK_GENERATION, PVP_WARNING
     }
 
     public enum TitlePosition {

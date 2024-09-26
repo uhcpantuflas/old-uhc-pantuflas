@@ -2,8 +2,10 @@ package com.github.gorkiiuss.uhcpantuflas.world;
 
 import com.github.gorkiiuss.uhcpantuflas.UHCPantuflas;
 import com.github.gorkiiuss.uhcpantuflas.gameplay.GameplayManager;
+import com.github.gorkiiuss.uhcpantuflas.gameplay.UHCStartCommandExecutor;
 import com.github.gorkiiuss.uhcpantuflas.player.PlayerManager;
 import com.github.gorkiiuss.uhcpantuflas.teams.TeamManager;
+import com.github.gorkiiuss.uhcpantuflas.title.TitleManager;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
@@ -17,12 +19,14 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import org.bukkit.*;
-import org.bukkit.command.CommandSender;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.popcraft.chunky.ChunkyProvider;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class WorldManager {
     private static WorldManager instance;
@@ -144,22 +148,38 @@ public class WorldManager {
     }
 
     public void preGenerateChunks() {
-        Server server = Bukkit.getServer();
-        CommandSender sender = server.getConsoleSender();
-        System.out.println("Selecting chunky world");
-        server.dispatchCommand(
-                sender,
-                "chunky world " + Bukkit.getWorlds().get(0).getName()
+        ChunkyProvider.get().getApi().startTask(
+                Bukkit.getWorlds().get(0).getName(),
+                "square",
+                0, 0,
+                (double) diameter / 2, (double)diameter / 2,
+                "region"
         );
-        System.out.println("Selecting worldborder chunky");
-        server.dispatchCommand(
-                sender,
-                "chunky worldborder"
-        );
-        System.out.println("Starting chunky");
-        server.dispatchCommand(
-                sender,
-                "chunky start"
-        );
+
+        TitleManager.get().sendTitle(TitleManager.BuiltInTitle.CHUNK_GENERATION);
+
+        ChunkyProvider.get().getApi().onGenerationComplete((event) -> new BukkitRunnable() {
+            @Override
+            public void run() {
+                UHCStartCommandExecutor.onCommand2();
+            }
+        }.runTask(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("uhc-pantuflas"))));
+//        Server server = Bukkit.getServer();
+//        CommandSender sender = server.getConsoleSender();
+//        System.out.println("Selecting chunky world");
+//        server.dispatchCommand(
+//                sender,
+//                "chunky world " + Bukkit.getWorlds().get(0).getName()
+//        );
+//        System.out.println("Selecting worldborder chunky");
+//        server.dispatchCommand(
+//                sender,
+//                "chunky worldborder"
+//        );
+//        System.out.println("Starting chunky");
+//        server.dispatchCommand(
+//                sender,
+//                "chunky start"
+//        );
     }
 }

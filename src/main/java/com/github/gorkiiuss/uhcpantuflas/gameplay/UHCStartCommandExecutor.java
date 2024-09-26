@@ -34,11 +34,15 @@ public class UHCStartCommandExecutor implements CommandExecutor {
         // Pre-generate chunks
         WorldManager.get().preGenerateChunks();
 
-        // Delete platform
-        WorldManager.get().deleteSpawnPlatform();
+        return true;
+    }
 
+    public static void onCommand2() {
         // TP players
         TeamManager.get().tpToInitialPositions();
+
+        // Delete platform
+        WorldManager.get().deleteSpawnPlatform();
 
         // Show starting title
         TitleManager.get().sendTitle(TitleManager.BuiltInTitle.STARTING);
@@ -65,6 +69,5 @@ public class UHCStartCommandExecutor implements CommandExecutor {
         TimeManager.get().initTimers();
 
         GameplayManager.get().setGameState(GameState.PLAYING);
-        return true;
     }
 }
